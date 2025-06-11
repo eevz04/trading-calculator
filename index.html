@@ -627,19 +627,6 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
             if (!input) return;
             
             try {
-                // Extraer datos básicos
-                const simboloMatch = input.match(/🔹\s*(\w+)/);
-                const tipoMatch = input.match(/Tipo:\s*(LONG|SHORT)/);
-                const riesgoMatch = input.match(/Riesgo:\s*\$(\d+(?:\.\d+)?)/);
-                const slMatch = input.match(/SL:\s*(\d+(?:\.\d+)?)/);
-                const tpMatch = input.match(/TP:\s*(\d+(?:\.\d+)?)/);
-                
-                if (simboloMatch) document.getElementById('simbolo').value = simboloMatch[1].toLowerCase();
-                if (tipoMatch) document.getElementById('tipo').value = tipoMatch[1];
-                if (riesgoMatch) document.getElementById('riesgo').value = riesgoMatch[1];
-                if (slMatch) document.getElementById('sl').value = slMatch[1];
-                if (tpMatch) document.getElementById('tp').value = tpMatch[1];
-                
                 // Limpiar entradas previas
                 for (let i = 1; i <= 3; i++) {
                     document.getElementById(`entrada${i}_precio`).value = '';
@@ -647,32 +634,151 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
                 }
                 document.getElementById('escalada_activa').checked = false;
                 
-                // Extraer entradas normales
-                const entradasMatches = input.matchAll(/- (\d+(?:\.\d+)?)\s*\((\d+)%\)\s*→/g);
-                let entradaIndex = 1;
-                for (const match of entradasMatches) {
-                    if (entradaIndex <= 3) {
-                        document.getElementById(`entrada${entradaIndex}_precio`).value = match[1];
-                        document.getElementById(`entrada${entradaIndex}_pct`).value = match[2];
-                        entradaIndex++;
+                // DETECTAR FORMATO Y EXTRAER DATOS
+                
+                // 1. Extraer símbolo (múltiples formatos)
+                const simboloPatterns = [
+                    /🔹\s*(\w+)/i,
+                    /símbolo[:\s]*(\w+)/i,
+                    /symbol[:\s]*(\w+)/i,
+                    /par[:\s]*(\w+)/i,
+                    /^(\w+)\s*(?:long|short)/i
+                ];
+                
+                for (const pattern of simboloPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('simbolo').value = match[1].toLowerCase();
+                        break;
                     }
                 }
                 
-                // Extraer escalonada
-                const escalonedaMatch = input.match(/- Escalonada \((\d+)%\):\s*(\d+(?:\.\d+)?)\s*a\s*(\d+(?:\.\d+)?)\s*con\s*(\d+)\s*órdenes/);
-                if (escalonedaMatch) {
-                    document.getElementById('escalada_activa').checked = true;
-                    document.getElementById('escalada_pct').value = escalonedaMatch[1];
-                    document.getElementById('escalada_desde').value = escalonedaMatch[2];
-                    document.getElementById('escalada_hasta').value = escalonedaMatch[3];
-                    document.getElementById('escalada_ordenes').value = escalonedaMatch[4];
+                // 2. Extraer tipo (LONG/SHORT)
+                const tipoPatterns = [
+                    /tipo[:\s]*(long|short)/i,
+                    /dirección[:\s]*(long|short)/i,
+                    /direction[:\s]*(long|short)/i,
+                    /(long|short)/i
+                ];
+                
+                for (const pattern of tipoPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('tipo').value = match[1].toUpperCase();
+                        break;
+                    }
                 }
                 
-                showStatus('success', '✅ Señal cargada');
+                // 3. Extraer riesgo (múltiples formatos)
+                const riesgoPatterns = [
+                    /riesgo[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /risk[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /capital[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /\$(\d+(?:\.\d+)?)/
+                ];
+                
+                for (const pattern of riesgoPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('riesgo').value = match[1];
+                        break;
+                    }
+                }
+                
+                // 4. Extraer Stop Loss (múltiples formatos)
+                const slPatterns = [
+                    /sl[:\s]*(\d+(?:\.\d+)?)/i,
+                    /stop\s*loss[:\s]*(\d+(?:\.\d+)?)/i,
+                    /stop[:\s]*(\d+(?:\.\d+)?)/i,
+                    /stoploss[:\s]*(\d+(?:\.\d+)?)/i
+                ];
+                
+                for (const pattern of slPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('sl').value = match[1];
+                        break;
+                    }
+                }
+                
+                // 5. Extraer Take Profit (múltiples formatos)
+                const tpPatterns = [
+                    /tp[:\s]*(\d+(?:\.\d+)?)/i,
+                    /take\s*profit[:\s]*(\d+(?:\.\d+)?)/i,
+                    /target[:\s]*(\d+(?:\.\d+)?)/i,
+                    /objetivo[:\s]*(\d+(?:\.\d+)?)/i
+                ];
+                
+                for (const pattern of tpPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('tp').value = match[1];
+                        break;
+                    }
+                }
+                
+                // 6. Extraer entradas (múltiples formatos)
+                const entradaPatterns = [
+                    // Formato: "Entrada 1: 105,900 (25%)"
+                    /entrada\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/gi,
+                    // Formato: "Entry 1: 105900 25%"
+                    /entry\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi,
+                    // Formato: "- 105900 (25%)"
+                    /-\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/g,
+                    // Formato: "105900 25%"
+                    /(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/g
+                ];
+                
+                let entradaIndex = 1;
+                for (const pattern of entradaPatterns) {
+                    const matches = [...input.matchAll(pattern)];
+                    for (const match of matches) {
+                        if (entradaIndex <= 3) {
+                            let precio, pct;
+                            if (match.length === 4) { // Con número de entrada
+                                precio = match[2].replace(/,/g, '');
+                                pct = match[3];
+                            } else { // Sin número de entrada
+                                precio = match[1].replace(/,/g, '');
+                                pct = match[2];
+                            }
+                            
+                            document.getElementById(`entrada${entradaIndex}_precio`).value = precio;
+                            document.getElementById(`entrada${entradaIndex}_pct`).value = pct;
+                            entradaIndex++;
+                        }
+                    }
+                    if (entradaIndex > 1) break; // Si encontró entradas, no buscar más
+                }
+                
+                // 7. Extraer escalada (múltiples formatos)
+                const escaladaPatterns = [
+                    // Formato: "Escalada: 104,800 a 104,400 con 8-10 órdenes (40%)"
+                    /escalada[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)(?:-\d+)?\s*órdenes\s*\((\d+)%\)/i,
+                    // Formato: "Scale: 104800 to 104400 with 8 orders 40%"
+                    /scale[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:to|a)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes)\s*(\d+)%/i,
+                    // Formato simplificado: "104800-104400 8 orders 40%"
+                    /(\d+(?:,\d{3})*(?:\.\d+)?)-(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)\s*(?:orders|órdenes)\s*(\d+)%/i
+                ];
+                
+                for (const pattern of escaladaPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('escalada_activa').checked = true;
+                        document.getElementById('escalada_desde').value = match[1].replace(/,/g, '');
+                        document.getElementById('escalada_hasta').value = match[2].replace(/,/g, '');
+                        document.getElementById('escalada_ordenes').value = match[3];
+                        document.getElementById('escalada_pct').value = match[4];
+                        break;
+                    }
+                }
+                
+                showStatus('success', '✅ Señal cargada - Parser mejorado');
                 calcularYMostrar(); // Auto-calcular y mostrar resultado
                 
             } catch (error) {
-                showStatus('error', '❌ Error al parsear');
+                showStatus('error', '❌ Error al parsear - Revisa el formato');
+                console.log('Parser error:', error);
             }
         }
         
