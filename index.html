@@ -756,9 +756,11 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
                     // Formato: "Escalada: 104,800 a 104,400 con 8-10 órdenes (40%)"
                     /escalada[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)(?:-\d+)?\s*órdenes\s*\((\d+)%\)/i,
                     // Formato: "Scale: 104800 to 104400 with 8 orders 40%"
-                    /scale[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:to|a)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes)\s*(\d+)%/i,
+                    /scale[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:to|a)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes)[:\s]*(\d+)%/i,
                     // Formato simplificado: "104800-104400 8 orders 40%"
-                    /(\d+(?:,\d{3})*(?:\.\d+)?)-(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)\s*(?:orders|órdenes)\s*(\d+)%/i
+                    /(\d+(?:,\d{3})*(?:\.\d+)?)-(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)\s*(?:orders|órdenes)[:\s]*(\d+)%/i,
+                    // Formato "scale 104800-104400 with 8 orders 40%"
+                    /scale[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)-(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes)[:\s]*(\d+)%/i
                 ];
                 
                 for (const pattern of escaladaPatterns) {
