@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>⚡ Trading Rápido - Móvil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-size: 16px;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .form-section {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background: linear-gradient(90deg, #f8f9fa, #e9ecef);
+            border-left: 4px solid #4ECDC4;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-grid.two-col {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input, .form-group select {
+            padding: 15px 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+        
+        .entradas-container {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        
+        .entrada-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: end;
+        }
+        
+        .escalada-container {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        
+        .escalada-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .escalada-grid-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .parser-section {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        
+        .parser-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #0084ff;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .buttons-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            touch-action: manipulation;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+            color: white;
+        }
+        
+        .btn-info {
+            background: linear-gradient(45deg, #0084ff, #00a8ff);
+            color: white;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .output-section {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        
+        .output-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+            min-height: 150px;
+            font-size: 13px;
+            line-height: 1.4;
+            overflow-x: auto;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 8px;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-container label {
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .status {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        /* Navegación por pestañas para móvil */
+        .tabs {
+            display: flex;
+            background: white;
+            border-bottom: 2px solid #e1e5e9;
+            position: sticky;
+            top: 76px;
+            z-index: 99;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px 10px;
+            text-align: center;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #4ECDC4;
+            border-bottom: 3px solid #4ECDC4;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Botón flotante para calcular */
+        .floating-calc {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-calc:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Trading Rápido</h1>
+            <p>Calculadora móvil optimizada</p>
+        </div>
+        
+        <!-- Navegación por pestañas -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('config')">⚙️ Config</button>
+            <button class="tab" onclick="showTab('entradas')">📈 Entradas</button>
+            <button class="tab" onclick="showTab('parser')">🔄 Parser</button>
+            <button class="tab" onclick="showTab('resultado')">🚀 Resultado</button>
+        </div>
+        
+        <!-- Pestaña: Configuración -->
+        <div id="config" class="tab-content active">
+            <div class="section-title">
+                💰 Configuración Básica
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>💰 Riesgo ($)</label>
+                    <input type="number" id="riesgo" value="100" min="1">
+                </div>
+                <div class="form-group">
+                    <label>🎯 Símbolo</label>
+                    <input type="text" id="simbolo" value="btc" placeholder="btc, eth, sol...">
+                </div>
+                <div class="form-group">
+                    <label>📊 Tipo</label>
+                    <select id="tipo">
+                        <option value="LONG">LONG</option>
+                        <option value="SHORT">SHORT</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-grid two-col">
+                <div class="form-group">
+                    <label>🛡️ Stop Loss</label>
+                    <input type="number" id="sl" value="58000" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>💰 Take Profit</label>
+                    <input type="number" id="tp" value="62000" step="0.01">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pestaña: Entradas -->
+        <div id="entradas" class="tab-content">
+            <div class="section-title">
+                📈 Entradas Normales
+            </div>
+            
+            <div class="entradas-container">
+                <div class="entrada-item">
+                    <div class="form-group">
+                        <label>Entrada 1 - Precio</label>
+                        <input type="number" id="entrada1_precio" value="61000" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>% Riesgo</label>
+                        <input type="number" id="entrada1_pct" value="15" min="0" max="100">
+                    </div>
+                </div>
+                
+                <div class="entrada-item">
+                    <div class="form-group">
+                        <label>Entrada 2 - Precio</label>
+                        <input type="number" id="entrada2_precio" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>% Riesgo</label>
+                        <input type="number" id="entrada2_pct" value="0" min="0" max="100">
+                    </div>
+                </div>
+                
+                <div class="entrada-item">
+                    <div class="form-group">
+                        <label>Entrada 3 - Precio</label>
+                        <input type="number" id="entrada3_precio" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>% Riesgo</label>
+                        <input type="number" id="entrada3_pct" value="0" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                📊 Órdenes Escalonadas
+            </div>
+            
+            <div class="escalada-container">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="escalada_activa">
+                    <label for="escalada_activa">Activar Escalada</label>
+                </div>
+                
+                <div class="escalada-grid">
+                    <div class="form-group">
+                        <label>Precio Desde</label>
+                        <input type="number" id="escalada_desde" value="59500" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Hasta</label>
+                        <input type="number" id="escalada_hasta" value="58500" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="escalada-grid-bottom">
+                    <div class="form-group">
+                        <label>Órdenes</label>
+                        <input type="number" id="escalada_ordenes" value="20" min="2" max="50">
+                    </div>
+                    <div class="form-group">
+                        <label>% Riesgo</label>
+                        <input type="number" id="escalada_pct" value="85" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pestaña: Parser -->
+        <div id="parser" class="tab-content">
+            <div class="section-title">
+                🔄 Pegar Señal Existente
+            </div>
+            
+            <div class="parser-section">
+                <label>Pega aquí una señal para editarla:</label>
+                <textarea id="parser_input" class="parser-textarea" placeholder="📊 NUEVA ORDEN CALCULADA&#10;🔹 btc&#10;Tipo: LONG&#10;..."></textarea>
+                <button class="btn btn-info" onclick="parsearSenal()" style="width: 100%;">🔄 Cargar Datos</button>
+            </div>
+            
+            <div class="buttons-container">
+                <button class="btn btn-secondary" onclick="copiarOutput()">📋 Copiar</button>
+                <button class="btn btn-success" onclick="enviarTelegram()">📤 Enviar Bot</button>
+            </div>
+            
+            <button class="btn btn-info" onclick="limpiarForm()" style="width: 100%; margin-top: 10px;">🗑️ Limpiar Todo</button>
+        </div>
+        
+        <!-- Pestaña: Resultado -->
+        <div id="resultado" class="tab-content">
+            <div class="section-title">
+                🚀 Señal Generada
+            </div>
+            
+            <div class="output-section">
+                <div id="output" class="output-text">
+                    Click el botón flotante para calcular...
+                </div>
+            </div>
+            
+            <div id="status"></div>
+        </div>
+    </div>
+    
+    <!-- Botón flotante para calcular -->
+    <button class="floating-calc" onclick="calcularYMostrar()">🧮</button>
+
+    <script>
+        function showTab(tabName) {
+            // Ocultar todos los contenidos
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Desactivar todas las pestañas
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Mostrar el contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activar la pestaña seleccionada
+            event.target.classList.add('active');
+        }
+        
+        function calcularYMostrar() {
+            calcular();
+            showTab('resultado');
+            // Actualizar la pestaña activa visualmente
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab')[3].classList.add('active'); // Pestaña resultado
+        }
+        
+        function calcular() {
+            const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
+            const simbolo = document.getElementById('simbolo').value;
+            const tipo = document.getElementById('tipo').value;
+            const sl = parseFloat(document.getElementById('sl').value);
+            const tp = parseFloat(document.getElementById('tp').value);
+            
+            // Entradas normales
+            const entradas = [];
+            for (let i = 1; i <= 3; i++) {
+                const precio = parseFloat(document.getElementById(`entrada${i}_precio`).value);
+                const pct = parseFloat(document.getElementById(`entrada${i}_pct`).value) || 0;
+                if (precio && pct > 0) {
+                    const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
+                    entradas.push({
+                        precio: precio,
+                        pct: pct,
+                        lotes: lotes.toFixed(6)
+                    });
+                }
+            }
+            
+            // Escalonada
+            let escalonada = null;
+            if (document.getElementById('escalada_activa').checked) {
+                const desde = parseFloat(document.getElementById('escalada_desde').value);
+                const hasta = parseFloat(document.getElementById('escalada_hasta').value);
+                const ordenes = parseInt(document.getElementById('escalada_ordenes').value);
+                const pct = parseFloat(document.getElementById('escalada_pct').value) || 0;
+                
+                if (desde && hasta && ordenes && pct > 0) {
+                    const precioPromedio = (desde + hasta) / 2;
+                    const lotesTotal = (riesgo * (pct/100)) / Math.abs(precioPromedio - sl);
+                    
+                    escalonada = {
+                        desde: desde,
+                        hasta: hasta,
+                        ordenes: ordenes,
+                        pct: pct,
+                        lotes: lotesTotal.toFixed(6)
+                    };
+                }
+            }
+            
+            // Cálculos finales
+            let lotesTotales = entradas.reduce((sum, e) => sum + parseFloat(e.lotes), 0);
+            if (escalonada) lotesTotales += parseFloat(escalonada.lotes);
+            
+            const pctTotal = entradas.reduce((sum, e) => sum + e.pct, 0) + (escalonada ? escalonada.pct : 0);
+            
+            // Precio promedio ponderado
+            let nocionalTotal = entradas.reduce((sum, e) => sum + (e.precio * parseFloat(e.lotes)), 0);
+            if (escalonada) {
+                const precioPromedio = (escalonada.desde + escalonada.hasta) / 2;
+                nocionalTotal += precioPromedio * parseFloat(escalonada.lotes);
+            }
+            const precioPromedio = nocionalTotal / lotesTotales;
+            
+            const perdidaSL = Math.abs(sl - precioPromedio) * lotesTotales;
+            const gananciaTP = Math.abs(tp - precioPromedio) * lotesTotales;
+            const rr = gananciaTP / perdidaSL;
+            
+            // Generar output
+            let output = `📊 NUEVA ORDEN CALCULADA
+
+🔹 ${simbolo}
+
+Tipo: ${tipo}
+Riesgo: $${riesgo}
+
+Entradas:`;
+
+            entradas.forEach(e => {
+                output += `\n- ${e.precio} (${e.pct}%) → ${e.lotes} lotes`;
+            });
+            
+            if (escalonada) {
+                output += `\n- Escalonada (${escalonada.pct}%): ${escalonada.desde} a ${escalonada.hasta} con ${escalonada.ordenes} órdenes → ${escalonada.lotes} lotes`;
+            }
+            
+            output += `
+
+Precio Promedio: ${precioPromedio.toFixed(2)}
+SL: ${sl} (Pérdida: ${perdidaSL.toFixed(2)})
+TP: ${tp} (Ganancia: ${gananciaTP.toFixed(2)})
+
+Lotes Totales: ${lotesTotales.toFixed(6)}
+R/B: ${rr.toFixed(3)}
+
+${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)'}`;
+            
+            document.getElementById('output').textContent = output;
+            
+            showStatus(pctTotal === 100 ? 'success' : 'error', 
+                     pctTotal === 100 ? '✅ Cálculo completado' : `⚠️ Porcentajes: ${pctTotal}%`);
+        }
+        
+        function parsearSenal() {
+            const input = document.getElementById('parser_input').value;
+            if (!input) return;
+            
+            try {
+                // Extraer datos básicos
+                const simboloMatch = input.match(/🔹\s*(\w+)/);
+                const tipoMatch = input.match(/Tipo:\s*(LONG|SHORT)/);
+                const riesgoMatch = input.match(/Riesgo:\s*\$(\d+(?:\.\d+)?)/);
+                const slMatch = input.match(/SL:\s*(\d+(?:\.\d+)?)/);
+                const tpMatch = input.match(/TP:\s*(\d+(?:\.\d+)?)/);
+                
+                if (simboloMatch) document.getElementById('simbolo').value = simboloMatch[1].toLowerCase();
+                if (tipoMatch) document.getElementById('tipo').value = tipoMatch[1];
+                if (riesgoMatch) document.getElementById('riesgo').value = riesgoMatch[1];
+                if (slMatch) document.getElementById('sl').value = slMatch[1];
+                if (tpMatch) document.getElementById('tp').value = tpMatch[1];
+                
+                // Limpiar entradas previas
+                for (let i = 1; i <= 3; i++) {
+                    document.getElementById(`entrada${i}_precio`).value = '';
+                    document.getElementById(`entrada${i}_pct`).value = '0';
+                }
+                document.getElementById('escalada_activa').checked = false;
+                
+                // Extraer entradas normales
+                const entradasMatches = input.matchAll(/- (\d+(?:\.\d+)?)\s*\((\d+)%\)\s*→/g);
+                let entradaIndex = 1;
+                for (const match of entradasMatches) {
+                    if (entradaIndex <= 3) {
+                        document.getElementById(`entrada${entradaIndex}_precio`).value = match[1];
+                        document.getElementById(`entrada${entradaIndex}_pct`).value = match[2];
+                        entradaIndex++;
+                    }
+                }
+                
+                // Extraer escalonada
+                const escalonedaMatch = input.match(/- Escalonada \((\d+)%\):\s*(\d+(?:\.\d+)?)\s*a\s*(\d+(?:\.\d+)?)\s*con\s*(\d+)\s*órdenes/);
+                if (escalonedaMatch) {
+                    document.getElementById('escalada_activa').checked = true;
+                    document.getElementById('escalada_pct').value = escalonedaMatch[1];
+                    document.getElementById('escalada_desde').value = escalonedaMatch[2];
+                    document.getElementById('escalada_hasta').value = escalonedaMatch[3];
+                    document.getElementById('escalada_ordenes').value = escalonedaMatch[4];
+                }
+                
+                showStatus('success', '✅ Señal cargada');
+                calcularYMostrar(); // Auto-calcular y mostrar resultado
+                
+            } catch (error) {
+                showStatus('error', '❌ Error al parsear');
+            }
+        }
+        
+        function copiarOutput() {
+            const output = document.getElementById('output').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                showStatus('success', '✅ Copiado');
+            });
+        }
+        
+        function enviarTelegram() {
+            const output = document.getElementById('output').textContent;
+            
+            const botToken = "7582987755:AAFBdNQFZ4McMsJwt60gvTs9CW2XkKZ3OMA";
+            const chatId = "7471012566";
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: output
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    showStatus('success', '✅ Enviado a Telegram!');
+                } else {
+                    showStatus('error', '❌ Error al enviar');
+                }
+            })
+            .catch(error => {
+                showStatus('error', '❌ Error de conexión');
+            });
+        }
+        
+        function limpiarForm() {
+            // MANTENER SOLO EL RIESGO - limpiar todo lo demás
+            document.getElementById('simbolo').value = '';
+            document.getElementById('tipo').selectedIndex = 0;
+            document.getElementById('sl').value = '';
+            document.getElementById('tp').value = '';
+            
+            // Limpiar TODAS las entradas
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`entrada${i}_precio`).value = '';
+                document.getElementById(`entrada${i}_pct`).value = '';
+            }
+            
+            // Limpiar escalada
+            document.getElementById('escalada_activa').checked = false;
+            document.getElementById('escalada_desde').value = '';
+            document.getElementById('escalada_hasta').value = '';
+            document.getElementById('escalada_ordenes').value = '';
+            document.getElementById('escalada_pct').value = '';
+            
+            // Limpiar parser y output
+            document.getElementById('parser_input').value = '';
+            document.getElementById('output').textContent = 'Click el botón flotante para calcular...';
+            
+            // Limpiar status
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = '';
+            statusEl.className = '';
+            
+            showStatus('success', '✅ Limpiado - Riesgo mantenido');
+        }
+        
+        function showStatus(type, message) {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.textContent = message;
+            setTimeout(() => {
+                status.textContent = '';
+                status.className = '';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
