@@ -469,7 +469,7 @@
             
             <div class="parser-section">
                 <label>Pega aquí una señal para editarla:</label>
-                <textarea id="parser_input" class="parser-textarea" placeholder="📊 NUEVA ORDEN CALCULADA&#10;🔹 btc&#10;Tipo: LONG&#10;..."></textarea>
+                <textarea id="parser_input" class="parser-textarea" placeholder="btc&#10;long&#10;entrada: 1 106090.9 30%&#10;escalada: 105670.8 a 104526.5 con 15 ordenes 30%&#10;100$ riesgo&#10;stop 102095.7"></textarea>
                 <button class="btn btn-info" onclick="parsearSenal()" style="width: 100%;">🔄 Cargar Datos</button>
             </div>
             
@@ -535,8 +535,8 @@
             // Entradas normales
             const entradas = [];
             for (let i = 1; i <= 3; i++) {
-                const precio = parseFloat(document.getElementById(`entrada${i}_precio`).value);
-                const pct = parseFloat(document.getElementById(`entrada${i}_pct`).value) || 0;
+                const precio = parseFloat(document.getElementById('entrada' + i + '_precio').value);
+                const pct = parseFloat(document.getElementById('entrada' + i + '_pct').value) || 0;
                 if (precio && pct > 0) {
                     const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
                     entradas.push({
@@ -588,104 +588,92 @@
             const rr = gananciaTP / perdidaSL;
             
             // Generar output
-            let output = `📊 NUEVA ORDEN CALCULADA
-
-🔹 ${simbolo}
-
-Tipo: ${tipo}
-Riesgo: $${riesgo}
-
-Entradas:`;
+            let output = '📊 NUEVA ORDEN CALCULADA\n\n🔹 ' + simbolo + '\n\nTipo: ' + tipo + '\nRiesgo: $' + riesgo + '\n\nEntradas:';
 
             entradas.forEach(e => {
-                output += `\n- ${e.precio} (${e.pct}%) → ${e.lotes} lotes`;
+                output += '\n- ' + e.precio + ' (' + e.pct + '%) → ' + e.lotes + ' lotes';
             });
             
             if (escalonada) {
-                output += `\n- Escalonada (${escalonada.pct}%): ${escalonada.desde} a ${escalonada.hasta} con ${escalonada.ordenes} órdenes → ${escalonada.lotes} lotes`;
+                output += '\n- Escalonada (' + escalonada.pct + '%): ' + escalonada.desde + ' a ' + escalonada.hasta + ' con ' + escalonada.ordenes + ' órdenes → ' + escalonada.lotes + ' lotes';
             }
             
-            output += `
-
-Precio Promedio: ${precioPromedio.toFixed(2)}
-SL: ${sl} (Pérdida: ${perdidaSL.toFixed(2)})
-TP: ${tp} (Ganancia: ${gananciaTP.toFixed(2)})
-
-Lotes Totales: ${lotesTotales.toFixed(6)}
-R/B: ${rr.toFixed(3)}
-
-${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)'}`;
+            output += '\n\nPrecio Promedio: ' + precioPromedio.toFixed(2) + '\nSL: ' + sl + ' (Pérdida: ' + perdidaSL.toFixed(2) + ')\nTP: ' + tp + ' (Ganancia: ' + gananciaTP.toFixed(2) + ')\n\nLotes Totales: ' + lotesTotales.toFixed(6) + '\nR/B: ' + rr.toFixed(3) + '\n\n' + (Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)');
             
             document.getElementById('output').textContent = output;
             
             showStatus(pctTotal === 100 ? 'success' : 'error', 
-                     pctTotal === 100 ? '✅ Cálculo completado' : `⚠️ Porcentajes: ${pctTotal}%`);
+                     pctTotal === 100 ? '✅ Cálculo completado' : '⚠️ Porcentajes: ' + pctTotal + '%');
         }
         
         function parsearSenal() {
             const input = document.getElementById('parser_input').value;
-            if (!input) return;
+            if (!input) {
+                showStatus('error', '❌ No hay datos para parsear');
+                return;
+            }
             
             try {
                 // Limpiar entradas previas
                 for (let i = 1; i <= 3; i++) {
-                    document.getElementById(`entrada${i}_precio`).value = '';
-                    document.getElementById(`entrada${i}_pct`).value = '0';
+                    document.getElementById('entrada' + i + '_precio').value = '';
+                    document.getElementById('entrada' + i + '_pct').value = '0';
                 }
                 document.getElementById('escalada_activa').checked = false;
                 
-                // DETECTAR FORMATO Y EXTRAER DATOS
-                
-                // 1. Extraer símbolo (múltiples formatos)
+                // 1. Extraer símbolo
                 const simboloPatterns = [
                     /🔹\s*(\w+)/i,
                     /símbolo[:\s]*(\w+)/i,
                     /symbol[:\s]*(\w+)/i,
                     /par[:\s]*(\w+)/i,
-                    /^(\w+)\s*(?:long|short)/i
+                    /^(\w+)\s*(?:long|short)/i,
+                    /^([a-z]{2,5})$/im
                 ];
                 
-                for (const pattern of simboloPatterns) {
-                    const match = input.match(pattern);
+                for (let j = 0; j < simboloPatterns.length; j++) {
+                    const match = input.match(simboloPatterns[j]);
                     if (match) {
                         document.getElementById('simbolo').value = match[1].toLowerCase();
                         break;
                     }
                 }
                 
-                // 2. Extraer tipo (LONG/SHORT)
+                // 2. Extraer tipo
                 const tipoPatterns = [
                     /tipo[:\s]*(long|short)/i,
                     /dirección[:\s]*(long|short)/i,
                     /direction[:\s]*(long|short)/i,
+                    /^(long|short)$/im,
                     /(long|short)/i
                 ];
                 
-                for (const pattern of tipoPatterns) {
-                    const match = input.match(pattern);
+                for (let j = 0; j < tipoPatterns.length; j++) {
+                    const match = input.match(tipoPatterns[j]);
                     if (match) {
                         document.getElementById('tipo').value = match[1].toUpperCase();
                         break;
                     }
                 }
                 
-                // 3. Extraer riesgo (múltiples formatos)
+                // 3. Extraer riesgo
                 const riesgoPatterns = [
                     /riesgo[:\s]*\$?(\d+(?:\.\d+)?)/i,
                     /risk[:\s]*\$?(\d+(?:\.\d+)?)/i,
                     /capital[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /(\d+)\$?\s*riesgo/i,
                     /\$(\d+(?:\.\d+)?)/
                 ];
                 
-                for (const pattern of riesgoPatterns) {
-                    const match = input.match(pattern);
+                for (let j = 0; j < riesgoPatterns.length; j++) {
+                    const match = input.match(riesgoPatterns[j]);
                     if (match) {
                         document.getElementById('riesgo').value = match[1];
                         break;
                     }
                 }
                 
-                // 4. Extraer Stop Loss (múltiples formatos)
+                // 4. Extraer Stop Loss
                 const slPatterns = [
                     /sl[:\s]*(\d+(?:\.\d+)?)/i,
                     /stop\s*loss[:\s]*(\d+(?:\.\d+)?)/i,
@@ -693,15 +681,15 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
                     /stoploss[:\s]*(\d+(?:\.\d+)?)/i
                 ];
                 
-                for (const pattern of slPatterns) {
-                    const match = input.match(pattern);
+                for (let j = 0; j < slPatterns.length; j++) {
+                    const match = input.match(slPatterns[j]);
                     if (match) {
                         document.getElementById('sl').value = match[1];
                         break;
                     }
                 }
                 
-                // 5. Extraer Take Profit (múltiples formatos)
+                // 5. Extraer Take Profit
                 const tpPatterns = [
                     /tp[:\s]*(\d+(?:\.\d+)?)/i,
                     /take\s*profit[:\s]*(\d+(?:\.\d+)?)/i,
@@ -709,74 +697,43 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
                     /objetivo[:\s]*(\d+(?:\.\d+)?)/i
                 ];
                 
-                for (const pattern of tpPatterns) {
-                    const match = input.match(pattern);
+                for (let j = 0; j < tpPatterns.length; j++) {
+                    const match = input.match(tpPatterns[j]);
                     if (match) {
                         document.getElementById('tp').value = match[1];
                         break;
                     }
                 }
                 
-                // 6. Extraer entradas (múltiples formatos)
-                const entradaPatterns = [
-                    // Formato: "Entrada 1: 105,900 (25%)"
-                    /entrada\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/gi,
-                    // Formato: "Entry 1: 105900 25%"
-                    /entry\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi,
-                    // Formato: "- 105900 (25%)"
-                    /-\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/g,
-                    // Formato: "105900 25%"
-                    /(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/g
-                ];
-                
+                // 6. Extraer entradas
+                const entradaPattern = /entrada[:\s]*(\d)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi;
+                const matches = input.matchAll(entradaPattern);
                 let entradaIndex = 1;
-                for (const pattern of entradaPatterns) {
-                    const matches = [...input.matchAll(pattern)];
-                    for (const match of matches) {
-                        if (entradaIndex <= 3) {
-                            let precio, pct;
-                            if (match.length === 4) { // Con número de entrada
-                                precio = match[2].replace(/,/g, '');
-                                pct = match[3];
-                            } else { // Sin número de entrada
-                                precio = match[1].replace(/,/g, '');
-                                pct = match[2];
-                            }
-                            
-                            document.getElementById(`entrada${entradaIndex}_precio`).value = precio;
-                            document.getElementById(`entrada${entradaIndex}_pct`).value = pct;
-                            entradaIndex++;
-                        }
-                    }
-                    if (entradaIndex > 1) break; // Si encontró entradas, no buscar más
-                }
                 
-                // 7. Extraer escalada (múltiples formatos)
-                const escaladaPatterns = [
-                    // Formato: "Escalada: 104,800 a 104,400 con 8-10 órdenes (40%)"
-                    /escalada[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)(?:-\d+)?\s*órdenes\s*\((\d+)%\)/i,
-                    // Formato: "Scale: 104800 to 104400 with 8 orders 40%"
-                    /scale[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:to|a)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes)[:\s]*(\d+)%/i,
-                    // Formato simplificado: "104800-104400 8 orders 40%"
-                    /(\d+(?:,\d{3})*(?:\.\d+)?)-(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)\s*(?:orders|órdenes)[:\s]*(\d+)%/i,
-                    // Formato "scale 104800-104400 with 8 orders 40%"
-                    /scale[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)-(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes)[:\s]*(\d+)%/i
-                ];
-                
-                for (const pattern of escaladaPatterns) {
-                    const match = input.match(pattern);
-                    if (match) {
-                        document.getElementById('escalada_activa').checked = true;
-                        document.getElementById('escalada_desde').value = match[1].replace(/,/g, '');
-                        document.getElementById('escalada_hasta').value = match[2].replace(/,/g, '');
-                        document.getElementById('escalada_ordenes').value = match[3];
-                        document.getElementById('escalada_pct').value = match[4];
-                        break;
+                for (const match of matches) {
+                    if (entradaIndex <= 3) {
+                        const precio = match[2].replace(/,/g, '');
+                        const pct = match[3];
+                        document.getElementById('entrada' + entradaIndex + '_precio').value = precio;
+                        document.getElementById('entrada' + entradaIndex + '_pct').value = pct;
+                        entradaIndex++;
                     }
                 }
                 
-                showStatus('success', '✅ Señal cargada - Parser mejorado');
-                calcularYMostrar(); // Auto-calcular y mostrar resultado
+                // 7. Extraer escalada
+                const escaladaPattern = /escalada[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)\s*ordenes\s*(\d+)%/i;
+                const escaladaMatch = input.match(escaladaPattern);
+                
+                if (escaladaMatch) {
+                    document.getElementById('escalada_activa').checked = true;
+                    document.getElementById('escalada_desde').value = escaladaMatch[1].replace(/,/g, '');
+                    document.getElementById('escalada_hasta').value = escaladaMatch[2].replace(/,/g, '');
+                    document.getElementById('escalada_ordenes').value = escaladaMatch[3];
+                    document.getElementById('escalada_pct').value = escaladaMatch[4];
+                }
+                
+                showStatus('success', '✅ Señal cargada correctamente');
+                calcularYMostrar();
                 
             } catch (error) {
                 showStatus('error', '❌ Error al parsear - Revisa el formato');
@@ -788,6 +745,8 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
             const output = document.getElementById('output').textContent;
             navigator.clipboard.writeText(output).then(() => {
                 showStatus('success', '✅ Copiado');
+            }).catch(() => {
+                showStatus('error', '❌ Error al copiar');
             });
         }
         
@@ -797,7 +756,7 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
             const botToken = "7582987755:AAFBdNQFZ4McMsJwt60gvTs9CW2XkKZ3OMA";
             const chatId = "7471012566";
             
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            const url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
             
             fetch(url, {
                 method: 'POST',
@@ -831,8 +790,8 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
             
             // Limpiar TODAS las entradas
             for (let i = 1; i <= 3; i++) {
-                document.getElementById(`entrada${i}_precio`).value = '';
-                document.getElementById(`entrada${i}_pct`).value = '';
+                document.getElementById('entrada' + i + '_precio').value = '';
+                document.getElementById('entrada' + i + '_pct').value = '';
             }
             
             // Limpiar escalada
@@ -856,7 +815,7 @@ ${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: 
         
         function showStatus(type, message) {
             const status = document.getElementById('status');
-            status.className = `status ${type}`;
+            status.className = 'status ' + type;
             status.textContent = message;
             setTimeout(() => {
                 status.textContent = '';
