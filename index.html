@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>⚡ Trading Rápido - Móvil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Trading Rápido - Formulario</title>
     <style>
         * {
             margin: 0;
@@ -12,72 +12,76 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            font-size: 16px;
-            padding: 0;
+            padding: 20px;
         }
         
         .container {
-            max-width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             background: white;
-            min-height: 100vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
         
         .header {
             background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             color: white;
-            padding: 20px 15px;
+            padding: 30px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-        
-        .header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
         .form-section {
-            padding: 15px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .column-left {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
+        }
+        
+        .column-right {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        @media (max-width: 968px) {
+            .form-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
         }
         
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #333;
             margin-bottom: 15px;
-            padding: 10px 15px;
-            background: linear-gradient(90deg, #f8f9fa, #e9ecef);
-            border-left: 4px solid #4ECDC4;
-            border-radius: 0 8px 8px 0;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #4ECDC4;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-weight: 600;
+            gap: 10px;
         }
         
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .form-grid.two-col {
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            margin-bottom: 20px;
         }
         
         .form-group {
@@ -88,17 +92,16 @@
         .form-group label {
             font-weight: 600;
             color: #555;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
         }
         
         .form-group input, .form-group select {
-            padding: 15px 12px;
+            padding: 10px 12px;
             border: 2px solid #e1e5e9;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-            background: white;
         }
         
         .form-group input:focus, .form-group select:focus {
@@ -109,68 +112,64 @@
         
         .entradas-container {
             background: #f8f9fa;
-            padding: 15px;
+            padding: 20px;
             border-radius: 12px;
-            margin-top: 10px;
         }
         
         .entrada-item {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
+            grid-template-columns: 1fr 80px;
+            gap: 12px;
+            margin-bottom: 12px;
             align-items: end;
         }
         
         .escalada-container {
             background: #fff3cd;
-            padding: 15px;
+            padding: 20px;
             border-radius: 12px;
-            margin-top: 10px;
         }
         
         .escalada-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
         }
         
         .escalada-grid-bottom {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            grid-template-columns: 80px 80px;
+            gap: 12px;
             margin-top: 12px;
         }
         
         .parser-section {
             background: #e7f3ff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 12px;
-            margin-top: 10px;
         }
         
         .parser-textarea {
             width: 100%;
-            min-height: 100px;
+            min-height: 120px;
             padding: 15px;
             border: 2px solid #0084ff;
             border-radius: 8px;
             font-family: monospace;
-            font-size: 14px;
+            font-size: 0.85rem;
             resize: vertical;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .buttons-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 20px 0;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
         
         .btn {
-            padding: 15px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 25px;
             font-size: 0.9rem;
@@ -179,7 +178,6 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            touch-action: manipulation;
         }
         
         .btn-primary {
@@ -202,59 +200,47 @@
             color: white;
         }
         
-        .btn:active {
-            transform: scale(0.98);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
         
         .output-section {
             background: #f1f3f4;
-            padding: 15px;
+            padding: 20px;
             border-radius: 12px;
-            margin-top: 10px;
         }
         
         .output-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            border: 1px solid #ddd;
-            min-height: 150px;
-            font-size: 15px; /* 🔥 AUMENTADO DE 13px A 15px */
-            line-height: 1.4;
-            overflow-x: auto;
-        }
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    border: 1px solid #ddd;
+    min-height: 200px;
+    font-size: 0.95rem;  /* 🔥 AUMENTADO DE 0.85rem A 0.95rem */
+    line-height: 1.4;
+}
         
         .checkbox-container {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 8px;
+            gap: 10px;
+            margin: 10px 0;
         }
         
         .checkbox-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-        
-        .checkbox-container label {
-            font-weight: 600;
-            cursor: pointer;
-            flex: 1;
+            width: 18px;
+            height: 18px;
         }
         
         .status {
-            padding: 12px 15px;
+            padding: 10px 15px;
             border-radius: 8px;
-            margin: 15px 0;
+            margin: 10px 0;
             font-weight: 600;
             font-size: 0.9rem;
-            text-align: center;
         }
         
         .status.success {
@@ -274,310 +260,321 @@
             color: #0c5460;
             border: 1px solid #bee5eb;
         }
-        
-        /* Navegación por pestañas para móvil */
-        .tabs {
-            display: flex;
-            background: white;
-            border-bottom: 2px solid #e1e5e9;
-            position: sticky;
-            top: 76px;
-            z-index: 99;
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 15px 5px;
-            text-align: center;
-            background: #f8f9fa;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        
-        .tab.active {
-            background: white;
-            color: #4ECDC4;
-            border-bottom: 3px solid #4ECDC4;
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 15px;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Botón flotante para calcular */
-        .floating-calc {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #4ECDC4, #44A08D);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .floating-calc:active {
-            transform: scale(0.95);
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>⚡ Trading Rápido</h1>
-            <p>Calculadora móvil optimizada</p>
+            <p>Formulario de órdenes para day trading - Layout optimizado</p>
         </div>
         
-        <!-- Navegación por pestañas -->
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('config')">⚙️ Config</button>
-            <button class="tab" onclick="showTab('entradas')">📈 Entradas</button>
-            <button class="tab" onclick="showTab('envio')">⚡ Envío</button>
-            <button class="tab" onclick="showTab('parser')">🔄 Parser</button>
-            <button class="tab" onclick="showTab('resultado')">🚀 Resultado</button>
-        </div>
-        
-        <!-- Pestaña: Configuración -->
-        <div id="config" class="tab-content active">
-            <div class="section-title">
-                💰 Configuración Básica
-            </div>
-            
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>💰 Riesgo ($)</label>
-                    <input type="number" id="riesgo" value="100" min="1">
-                </div>
-                <div class="form-group">
-                    <label>🎯 Símbolo</label>
-                    <input type="text" id="simbolo" value="btc" placeholder="btc, eth, sol...">
-                </div>
-                <div class="form-group">
-                    <label>📊 Tipo</label>
-                    <select id="tipo">
-                        <option value="LONG">LONG</option>
-                        <option value="SHORT">SHORT</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-grid two-col">
-                <div class="form-group">
-                    <label>🛡️ Stop Loss</label>
-                    <input type="number" id="sl" value="58000" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label>💰 Take Profit</label>
-                    <input type="number" id="tp" value="62000" step="0.01">
-                </div>
-            </div>
-        </div>
-        
-        <!-- Pestaña: Entradas -->
-        <div id="entradas" class="tab-content">
-            <div class="section-title">
-                📈 Entradas Normales
-            </div>
-            
-            <div class="entradas-container">
-                <div class="entrada-item">
-                    <div class="form-group">
-                        <label>Entrada 1 - Precio</label>
-                        <input type="number" id="entrada1_precio" value="61000" step="0.01">
+        <div class="form-section">
+            <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+            <div class="column-left">
+                
+                <!-- Configuración Básica -->
+                <div>
+                    <div class="section-title">
+                        💰 Configuración Básica
                     </div>
-                    <div class="form-group">
-                        <label>% Riesgo</label>
-                        <input type="number" id="entrada1_pct" value="15" min="0" max="100">
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>💰 Riesgo ($)</label>
+                            <input type="number" id="riesgo" value="100" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>🎯 Símbolo</label>
+                            <input type="text" id="simbolo" value="btc" placeholder="btc, eth, sol, etc...">
+                        </div>
+                        <div class="form-group">
+                            <label>📊 Tipo</label>
+                            <select id="tipo">
+                                <option value="LONG">LONG</option>
+                                <option value="SHORT">SHORT</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>🛡️ Stop Loss</label>
+                            <input type="number" id="sl" value="58000" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>💰 Take Profit</label>
+                            <input type="number" id="tp" value="62000" step="0.01">
+                        </div>
                     </div>
                 </div>
                 
-                <div class="entrada-item">
-                    <div class="form-group">
-                        <label>Entrada 2 - Precio</label>
-                        <input type="number" id="entrada2_precio" step="0.01">
+                <!-- Entradas Normales -->
+                <div>
+                    <div class="section-title">
+                        📈 Entradas Normales
                     </div>
-                    <div class="form-group">
-                        <label>% Riesgo</label>
-                        <input type="number" id="entrada2_pct" value="0" min="0" max="100">
-                    </div>
-                </div>
-                
-                <div class="entrada-item">
-                    <div class="form-group">
-                        <label>Entrada 3 - Precio</label>
-                        <input type="number" id="entrada3_precio" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label>% Riesgo</label>
-                        <input type="number" id="entrada3_pct" value="0" min="0" max="100">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section-title">
-                📊 Órdenes Escalonadas #1
-            </div>
-            
-            <div class="escalada-container">
-                <div class="checkbox-container">
-                    <input type="checkbox" id="escalada_activa">
-                    <label for="escalada_activa">Activar Escalada #1</label>
-                </div>
-                
-                <div class="escalada-grid">
-                    <div class="form-group">
-                        <label>Precio Desde</label>
-                        <input type="number" id="escalada_desde" value="59500" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label>Precio Hasta</label>
-                        <input type="number" id="escalada_hasta" value="58500" step="0.01">
+                    
+                    <div class="entradas-container">
+                        <div class="entrada-item">
+                            <div class="form-group">
+                                <label>Entrada 1 - Precio</label>
+                                <input type="number" id="entrada1_precio" value="61000" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>% Riesgo</label>
+                                <input type="number" id="entrada1_pct" value="15" min="0" max="100">
+                            </div>
+                        </div>
+                        
+                        <div class="entrada-item">
+                            <div class="form-group">
+                                <label>Entrada 2 - Precio</label>
+                                <input type="number" id="entrada2_precio" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>% Riesgo</label>
+                                <input type="number" id="entrada2_pct" value="0" min="0" max="100">
+                            </div>
+                        </div>
+                        
+                        <div class="entrada-item">
+                            <div class="form-group">
+                                <label>Entrada 3 - Precio</label>
+                                <input type="number" id="entrada3_precio" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>% Riesgo</label>
+                                <input type="number" id="entrada3_pct" value="0" min="0" max="100">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="escalada-grid-bottom">
-                    <div class="form-group">
-                        <label>Órdenes</label>
-                        <input type="number" id="escalada_ordenes" value="20" min="2" max="50">
+                <!-- Órdenes Escalonadas #1 -->
+                <div>
+                    <div class="section-title">
+                        📊 Órdenes Escalonadas #1
                     </div>
-                    <div class="form-group">
-                        <label>% Riesgo</label>
-                        <input type="number" id="escalada_pct" value="85" min="0" max="100">
+                    
+                    <div class="escalada-container">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="escalada_activa">
+                            <label for="escalada_activa">Activar Primer Rango Escalonado</label>
+                        </div>
+                        
+                        <div class="escalada-grid">
+                            <div class="form-group">
+                                <label>Precio Desde</label>
+                                <input type="number" id="escalada_desde" value="59500" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>Precio Hasta</label>
+                                <input type="number" id="escalada_hasta" value="58500" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="escalada-grid-bottom">
+                            <div class="form-group">
+                                <label>Órdenes</label>
+                                <input type="number" id="escalada_ordenes" value="20" min="2" max="50">
+                            </div>
+                            <div class="form-group">
+                                <label>% Riesgo</label>
+                                <input type="number" id="escalada_pct" value="85" min="0" max="100">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 🆕 SEGUNDA ESCALADA -->
-            <div class="section-title">
-                📊 Órdenes Escalonadas #2
-            </div>
-            
-            <div class="escalada-container">
-                <div class="checkbox-container">
-                    <input type="checkbox" id="escalada2_activa">
-                    <label for="escalada2_activa">Activar Escalada #2</label>
+                <!-- Órdenes Escalonadas #2 -->
+                <div>
+                    <div class="section-title">
+                        📊 Órdenes Escalonadas #2
+                    </div>
+                    
+                    <div class="escalada-container">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="escalada2_activa">
+                            <label for="escalada2_activa">Activar Segundo Rango Escalonado</label>
+                        </div>
+                        
+                        <div class="escalada-grid">
+                            <div class="form-group">
+                                <label>Precio Desde</label>
+                                <input type="number" id="escalada2_desde" value="58000" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label>Precio Hasta</label>
+                                <input type="number" id="escalada2_hasta" value="57000" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="escalada-grid-bottom">
+                            <div class="form-group">
+                                <label>Órdenes</label>
+                                <input type="number" id="escalada2_ordenes" value="10" min="2" max="50">
+                            </div>
+                            <div class="form-group">
+                                <label>% Riesgo</label>
+                                <input type="number" id="escalada2_pct" value="0" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="escalada-grid">
-                    <div class="form-group">
-                        <label>Precio Desde</label>
-                        <input type="number" id="escalada2_desde" value="58000" step="0.01">
+            </div>
+            
+            <!-- COLUMNA DERECHA: PARSER Y RESULTADOS -->
+            <div class="column-right">
+                
+                <!-- Parser de Señales -->
+                <div>
+                    <div class="section-title">
+                        🔄 Pegar Señal Existente
                     </div>
-                    <div class="form-group">
-                        <label>Precio Hasta</label>
-                        <input type="number" id="escalada2_hasta" value="57000" step="0.01">
+                    
+                    <div class="parser-section">
+                        <label>Pega aquí una señal para editarla:</label>
+                        <textarea id="parser_input" class="parser-textarea" placeholder="Pega aquí la señal de tu bot...&#10;📊 NUEVA ORDEN CALCULADA&#10;🔹 btc&#10;Tipo: LONG&#10;..."></textarea>
+                        <button class="btn btn-info" onclick="parsearSenal()">🔄 Cargar Datos</button>
                     </div>
                 </div>
                 
-                <div class="escalada-grid-bottom">
-                    <div class="form-group">
-                        <label>Órdenes</label>
-                        <input type="number" id="escalada2_ordenes" value="10" min="2" max="50">
+                <!-- Botones de Acción -->
+                <div>
+                    <div class="section-title">
+                        ⚡ Acciones
                     </div>
-                    <div class="form-group">
-                        <label>% Riesgo</label>
-                        <input type="number" id="escalada2_pct" value="0" min="0" max="100">
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-primary" onclick="calcular()">🧮 Calcular</button>
+                        <button class="btn btn-secondary" onclick="copiarOutput()">📋 Copiar</button>
+                        <button class="btn btn-success" onclick="enviarTelegram()">📤 Enviar Bot</button>
+                        <button class="btn btn-info" onclick="limpiarForm()">🗑️ Limpiar</button>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- 🆕 PESTAÑA: ENVÍO RÁPIDO -->
-        <div id="envio" class="tab-content">
-            <div class="section-title">
-                ⚡ Envío Rápido con Shortcuts
-            </div>
-            
-            <div class="buttons-container">
-                <button class="btn btn-success" onclick="enviarScale()">🪜 SCALE</button>
-                <button class="btn btn-info" onclick="enviarMarket()">⚡ MARKET</button>
-                <button class="btn btn-secondary" onclick="enviarEntradas()">🎯 ENTRADAS</button>
-                <button class="btn btn-primary" onclick="enviarShortcuts()">🚀 Shortcuts</button>
-            </div>
-
-            <div class="section-title">
-                📤 Envío Normal
-            </div>
-            
-            <div class="buttons-container">
-                <button class="btn btn-secondary" onclick="copiarOutput()">📋 Copiar</button>
-                <button class="btn btn-success" onclick="enviarTelegram()">📤 Enviar Bot</button>
-            </div>
-            
-            <button class="btn btn-info" onclick="limpiarForm()" style="width: 100%; margin-top: 10px;">🗑️ Limpiar Todo</button>
-        </div>
-        
-        <!-- Pestaña: Parser -->
-        <div id="parser" class="tab-content">
-            <div class="section-title">
-                🔄 Pegar Señal Existente
-            </div>
-            
-            <div class="parser-section">
-                <label>Pega aquí una señal para editarla:</label>
-                <textarea id="parser_input" class="parser-textarea" placeholder="btc&#10;long&#10;entrada: 1 106090.9 30%&#10;escalada: 105670.8 a 104526.5 con 15 ordenes 30%&#10;100$ riesgo&#10;stop 102095.7"></textarea>
-                <button class="btn btn-info" onclick="parsearSenal()" style="width: 100%;">🔄 Cargar Datos</button>
-            </div>
-        </div>
-        
-        <!-- Pestaña: Resultado -->
-        <div id="resultado" class="tab-content">
-            <div class="section-title">
-                🚀 Señal Generada
-            </div>
-            
-            <div class="output-section">
-                <div id="output" class="output-text">
-                    Click el botón flotante para calcular...
+                
+                <!-- 🆕 BOTONES DE ENVÍO RÁPIDO -->
+                <div>
+                    <div class="section-title">
+                        ⚡ Envío Rápido con Shortcuts
+                    </div>
+                    
+                    <div class="buttons-container">
+                        <button class="btn btn-success" onclick="enviarScale()">🪜 Enviar SCALE</button>
+                        <button class="btn btn-info" onclick="enviarMarket()">⚡ Enviar MARKET</button>
+                        <button class="btn btn-secondary" onclick="enviarEntradas()">🎯 Enviar ENTRADAS</button>
+                        <button class="btn btn-primary" onclick="enviarShortcuts()">🚀 Ver Shortcuts</button>
+                    </div>
                 </div>
+                
+                <!-- Output -->
+                <div>
+                    <div class="section-title">
+                        🚀 Señal Generada
+                    </div>
+                    
+                    <div class="output-section">
+                        <div id="output" class="output-text">
+                            Click "Calcular" para generar la señal...
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="status"></div>
+                
             </div>
-            
-            <div id="status"></div>
         </div>
     </div>
-    
-    <!-- Botón flotante para calcular -->
-    <button class="floating-calc" onclick="calcularYMostrar()">🧮</button>
 
     <script>
-        function showTab(tabName) {
-            // Ocultar todos los contenidos
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+        // 🧠 FUNCIÓN DE DISTRIBUCIÓN INTELIGENTE PARA TODAS LAS CRYPTOS
+        function distribuirCantidadesInteligente(totalLotes, numOrdenes, tipoOperacion) {
+            let pesos;
             
-            // Desactivar todas las pestañas
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            if (tipoOperacion === 'LONG') {
+                // COMPRAS: Más lotes ABAJO (mejores precios para cualquier crypto)
+                if (numOrdenes <= 5) {
+                    pesos = [8, 12, 20, 30, 30];
+                } else if (numOrdenes <= 10) {
+                    pesos = [3, 4, 5, 7, 10, 15, 20, 16, 12, 8];
+                } else if (numOrdenes <= 15) {
+                    pesos = [2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 14, 12, 10, 7];
+                } else if (numOrdenes <= 20) {
+                    pesos = [1, 1, 2, 2, 3, 4, 5, 6, 8, 10, 12, 14, 12, 10, 8, 6, 5, 4, 3, 2];
+                } else {
+                    // Para más de 20 órdenes, generar patrón piramidal
+                    pesos = [];
+                    for (let i = 0; i < numOrdenes; i++) {
+                        const peso = 1 + (i * 2); // Más peso hacia el final (precios más bajos)
+                        pesos.push(peso);
+                    }
+                }
+            } else {
+                // VENTAS/SHORTS: Más lotes ARRIBA (mejores precios para vender)
+                if (numOrdenes <= 5) {
+                    pesos = [30, 30, 20, 12, 8];
+                } else if (numOrdenes <= 10) {
+                    pesos = [8, 12, 16, 20, 15, 10, 7, 5, 4, 3];
+                } else if (numOrdenes <= 15) {
+                    pesos = [7, 10, 12, 14, 16, 14, 12, 10, 8, 7, 6, 5, 4, 3, 2];
+                } else if (numOrdenes <= 20) {
+                    pesos = [2, 3, 4, 5, 6, 8, 10, 12, 14, 12, 10, 8, 6, 5, 4, 3, 2, 2, 1, 1];
+                } else {
+                    // Para más de 20 órdenes, generar patrón piramidal invertido
+                    pesos = [];
+                    for (let i = 0; i < numOrdenes; i++) {
+                        const peso = numOrdenes - i; // Más peso al inicio (precios más altos)
+                        pesos.push(peso);
+                    }
+                }
+            }
             
-            // Mostrar el contenido seleccionado
-            document.getElementById(tabName).classList.add('active');
+            // Ajustar array si tiene diferente longitud
+            if (pesos.length !== numOrdenes) {
+                const ratio = numOrdenes / pesos.length;
+                const nuevoPesos = [];
+                for (let i = 0; i < numOrdenes; i++) {
+                    const index = Math.floor(i / ratio);
+                    nuevoPesos.push(pesos[Math.min(index, pesos.length - 1)]);
+                }
+                pesos = nuevoPesos;
+            }
             
-            // Activar la pestaña seleccionada
-            event.target.classList.add('active');
+            // Normalizar pesos a porcentajes
+            const totalPeso = pesos.reduce((sum, peso) => sum + peso, 0);
+            const porcentajes = pesos.map(peso => peso / totalPeso);
+            
+            // Calcular cantidades
+            const cantidades = porcentajes.map(pct => totalLotes * pct);
+            
+            return cantidades;
         }
-        
-        function calcularYMostrar() {
-            calcular();
-            showTab('resultado');
-            // Actualizar la pestaña activa visualmente
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab')[4].classList.add('active'); // Pestaña resultado
+
+        // 🧠 FUNCIÓN PARA CALCULAR PRECIO PROMEDIO PONDERADO PRECISO
+        function calcularPrecioPromedioPonderado(escalonada) {
+            if (!escalonada || !escalonada.cantidadesInteligentes) {
+                return (escalonada.desde + escalonada.hasta) / 2;
+            }
+            
+            const step = Math.abs(escalonada.hasta - escalonada.desde) / (escalonada.ordenes - 1);
+            let nocionalTotal = 0;
+            let lotesTotal = 0;
+            
+            for (let i = 0; i < escalonada.ordenes; i++) {
+                const precio = escalonada.desde > escalonada.hasta ? 
+                              escalonada.desde - (step * i) : 
+                              escalonada.desde + (step * i);
+                const cantidad = escalonada.cantidadesInteligentes[i];
+                
+                nocionalTotal += precio * cantidad;
+                lotesTotal += cantidad;
+            }
+            
+            return nocionalTotal / lotesTotal;
         }
-        
+
         function calcular() {
             const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
             const simbolo = document.getElementById('simbolo').value;
@@ -588,8 +585,8 @@
             // Entradas normales
             const entradas = [];
             for (let i = 1; i <= 3; i++) {
-                const precio = parseFloat(document.getElementById('entrada' + i + '_precio').value);
-                const pct = parseFloat(document.getElementById('entrada' + i + '_pct').value) || 0;
+                const precio = parseFloat(document.getElementById(`entrada${i}_precio`).value);
+                const pct = parseFloat(document.getElementById(`entrada${i}_pct`).value) || 0;
                 if (precio && pct > 0) {
                     const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
                     entradas.push({
@@ -600,241 +597,481 @@
                 }
             }
             
-            // 🔥 ESCALADA #1
-            let escalonada1 = null;
-            if (document.getElementById('escalada_activa').checked) {
-                const desde = parseFloat(document.getElementById('escalada_desde').value);
-                const hasta = parseFloat(document.getElementById('escalada_hasta').value);
-                const ordenes = parseInt(document.getElementById('escalada_ordenes').value);
-                const pct = parseFloat(document.getElementById('escalada_pct').value) || 0;
-                
-                if (desde && hasta && ordenes && pct > 0) {
-                    const precioPromedio = (desde + hasta) / 2;
-                    const lotesTotal = (riesgo * (pct/100)) / Math.abs(precioPromedio - sl);
-                    
-                    escalonada1 = {
-                        desde: desde,
-                        hasta: hasta,
-                        ordenes: ordenes,
-                        pct: pct,
-                        lotes: lotesTotal.toFixed(6),
-                        nombre: "Escalonada 1"
-                    };
-                }
-            }
+            // Escalonada #1
+           // Escalonada #1
+let escalonada1 = null;
+if (document.getElementById('escalada_activa').checked) {
+    const desde = parseFloat(document.getElementById('escalada_desde').value);
+    const hasta = parseFloat(document.getElementById('escalada_hasta').value);
+    const ordenes = parseInt(document.getElementById('escalada_ordenes').value);
+    const pct = parseFloat(document.getElementById('escalada_pct').value) || 0;
+    
+    if (desde && hasta && ordenes && pct > 0) {
+        const precioPromedio = (desde + hasta) / 2;
+        const lotesTotal = (riesgo * (pct/100)) / Math.abs(precioPromedio - sl);
+        
+        // 🧠 USAR DISTRIBUCIÓN INTELIGENTE
+        const cantidadesInteligentes1 = distribuirCantidadesInteligente(lotesTotal, ordenes, tipo);
+        
+        escalonada1 = {
+            desde: desde,
+            hasta: hasta,
+            ordenes: ordenes,
+            pct: pct,
+            lotes: lotesTotal.toFixed(6),
+            nombre: "Escalonada 1",
+            cantidadesInteligentes: cantidadesInteligentes1
+        };
+    }
+}
 
-            // 🔥 ESCALADA #2
-            let escalonada2 = null;
-            if (document.getElementById('escalada2_activa').checked) {
-                const desde = parseFloat(document.getElementById('escalada2_desde').value);
-                const hasta = parseFloat(document.getElementById('escalada2_hasta').value);
-                const ordenes = parseInt(document.getElementById('escalada2_ordenes').value);
-                const pct = parseFloat(document.getElementById('escalada2_pct').value) || 0;
-                
-                if (desde && hasta && ordenes && pct > 0) {
-                    const precioPromedio = (desde + hasta) / 2;
-                    const lotesTotal = (riesgo * (pct/100)) / Math.abs(precioPromedio - sl);
-                    
-                    escalonada2 = {
-                        desde: desde,
-                        hasta: hasta,
-                        ordenes: ordenes,
-                        pct: pct,
-                        lotes: lotesTotal.toFixed(6),
-                        nombre: "Escalonada 2"
-                    };
-                }
-            }
-            
-            // Cálculos finales
-            let lotesTotales = entradas.reduce((sum, e) => sum + parseFloat(e.lotes), 0);
-            if (escalonada1) lotesTotales += parseFloat(escalonada1.lotes);
-            if (escalonada2) lotesTotales += parseFloat(escalonada2.lotes);
-            
-            const pctTotal = entradas.reduce((sum, e) => sum + e.pct, 0) + 
-                             (escalonada1 ? escalonada1.pct : 0) + 
-                             (escalonada2 ? escalonada2.pct : 0);
-            
-            // Precio promedio ponderado
-            let nocionalTotal = entradas.reduce((sum, e) => sum + (e.precio * parseFloat(e.lotes)), 0);
-            if (escalonada1) {
-                const precioPromedio1 = (escalonada1.desde + escalonada1.hasta) / 2;
-                nocionalTotal += precioPromedio1 * parseFloat(escalonada1.lotes);
-            }
-            if (escalonada2) {
-                const precioPromedio2 = (escalonada2.desde + escalonada2.hasta) / 2;
-                nocionalTotal += precioPromedio2 * parseFloat(escalonada2.lotes);
-            }
-            const precioPromedio = nocionalTotal / lotesTotales;
-            
-            const perdidaSL = Math.abs(sl - precioPromedio) * lotesTotales;
-            const gananciaTP = Math.abs(tp - precioPromedio) * lotesTotales;
-            const rr = gananciaTP / perdidaSL;
-            
-            // Generar output
-            let output = '📊 NUEVA ORDEN CALCULADA\n\n🔹 ' + simbolo + '\n\nTipo: ' + tipo + '\nRiesgo: $' + riesgo + '\n\nEntradas:';
+// Escalonada #2
+let escalonada2 = null;
+if (document.getElementById('escalada2_activa').checked) {
+    const desde = parseFloat(document.getElementById('escalada2_desde').value);
+    const hasta = parseFloat(document.getElementById('escalada2_hasta').value);
+    const ordenes = parseInt(document.getElementById('escalada2_ordenes').value);
+    const pct = parseFloat(document.getElementById('escalada2_pct').value) || 0;
+    
+    if (desde && hasta && ordenes && pct > 0) {
+        const precioPromedio = (desde + hasta) / 2;
+        const lotesTotal = (riesgo * (pct/100)) / Math.abs(precioPromedio - sl);
+        
+        // 🧠 USAR DISTRIBUCIÓN INTELIGENTE
+        const cantidadesInteligentes2 = distribuirCantidadesInteligente(lotesTotal, ordenes, tipo);
+        
+        escalonada2 = {
+            desde: desde,
+            hasta: hasta,
+            ordenes: ordenes,
+            pct: pct,
+            lotes: lotesTotal.toFixed(6),
+            nombre: "Escalonada 2",
+            cantidadesInteligentes: cantidadesInteligentes2
+        };
+    }
+}
+
+// Cálculos finales
+let lotesTotales = entradas.reduce((sum, e) => sum + parseFloat(e.lotes), 0);
+if (escalonada1) lotesTotales += parseFloat(escalonada1.lotes);
+if (escalonada2) lotesTotales += parseFloat(escalonada2.lotes);
+
+const pctTotal = entradas.reduce((sum, e) => sum + e.pct, 0) + 
+                 (escalonada1 ? escalonada1.pct : 0) + 
+                 (escalonada2 ? escalonada2.pct : 0);
+
+// 🧠 Precio promedio ponderado PRECISO con distribución inteligente
+let nocionalTotal = entradas.reduce((sum, e) => sum + (e.precio * parseFloat(e.lotes)), 0);
+if (escalonada1) {
+    const precioPromedio1 = calcularPrecioPromedioPonderado(escalonada1);
+    nocionalTotal += precioPromedio1 * parseFloat(escalonada1.lotes);
+}
+if (escalonada2) {
+    const precioPromedio2 = calcularPrecioPromedioPonderado(escalonada2);
+    nocionalTotal += precioPromedio2 * parseFloat(escalonada2.lotes);
+}
+const precioPromedio = nocionalTotal / lotesTotales;
+
+const perdidaSL = Math.abs(sl - precioPromedio) * lotesTotales;
+const gananciaTP = Math.abs(tp - precioPromedio) * lotesTotales;
+const rr = gananciaTP / perdidaSL;
+
+// Generar output
+let output = `📊 NUEVA ORDEN CALCULADA
+
+🔹 ${simbolo}
+
+Tipo: ${tipo}
+Riesgo: $${riesgo}
+
+Entradas:`;
 
             entradas.forEach(e => {
-                output += '\n- ' + e.precio + ' (' + e.pct + '%) → ' + e.lotes + ' lotes';
+                output += `\n- ${e.precio} (${e.pct}%) → ${e.lotes} lotes`;
             });
             
             if (escalonada1) {
-                output += '\n- ' + escalonada1.nombre + ' (' + escalonada1.pct + '%): ' + escalonada1.desde + ' a ' + escalonada1.hasta + ' con ' + escalonada1.ordenes + ' órdenes → ' + escalonada1.lotes + ' lotes';
+                output += `\n- ${escalonada1.nombre} (${escalonada1.pct}%): ${escalonada1.desde} a ${escalonada1.hasta} con ${escalonada1.ordenes} órdenes → ${escalonada1.lotes} lotes`;
             }
 
             if (escalonada2) {
-                output += '\n- ' + escalonada2.nombre + ' (' + escalonada2.pct + '%): ' + escalonada2.desde + ' a ' + escalonada2.hasta + ' con ' + escalonada2.ordenes + ' órdenes → ' + escalonada2.lotes + ' lotes';
+                output += `\n- ${escalonada2.nombre} (${escalonada2.pct}%): ${escalonada2.desde} a ${escalonada2.hasta} con ${escalonada2.ordenes} órdenes → ${escalonada2.lotes} lotes`;
             }
             
-            output += '\n\nPrecio Promedio: ' + precioPromedio.toFixed(2) + '\nSL: ' + sl + ' (Pérdida: ' + perdidaSL.toFixed(2) + ')\nTP: ' + tp + ' (Ganancia: ' + gananciaTP.toFixed(2) + ')\n\nLotes Totales: ' + lotesTotales.toFixed(6) + '\nR/B: ' + rr.toFixed(3) + '\n\n' + (Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)');
+            output += `
+
+Precio Promedio: ${precioPromedio.toFixed(2)}
+SL: ${sl} (Pérdida: ${perdidaSL.toFixed(2)})
+TP: ${tp} (Ganancia: ${gananciaTP.toFixed(2)})
+
+Lotes Totales: ${lotesTotales.toFixed(6)}
+R/B: ${rr.toFixed(3)}
+
+${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)'}`;
             
             document.getElementById('output').textContent = output;
             
             showStatus(pctTotal === 100 ? 'success' : 'error', 
-                     pctTotal === 100 ? '✅ Cálculo completado' : '⚠️ Porcentajes: ' + pctTotal + '%');
+                     pctTotal === 100 ? '✅ Cálculo completado correctamente' : `⚠️ Los porcentajes suman ${pctTotal}% (debe ser 100%)`);
         }
-
-        // 🆕 FUNCIONES DE ENVÍO RÁPIDO CON SHORTCUTS
-
-        function enviarScale() {
-            const simbolo = document.getElementById('simbolo').value || 'btc';
-            const tipo = document.getElementById('tipo').value;
-            const sl = document.getElementById('sl').value;
-            const tp = document.getElementById('tp').value;
+        
+        function parsearSenal() {
+            const input = document.getElementById('parser_input').value;
+            if (!input) return;
             
-            let comandosEnviados = 0;
-            
-            // 🔥 ENVIAR ESCALADA #1 SI ESTÁ ACTIVA
-            if (document.getElementById('escalada_activa').checked) {
-                const desde1 = document.getElementById('escalada_desde').value;
-                const hasta1 = document.getElementById('escalada_hasta').value;
-                const ordenes1 = document.getElementById('escalada_ordenes').value;
-                const pct1 = parseFloat(document.getElementById('escalada_pct').value) || 0;
-                const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
-                
-                if (desde1 && hasta1 && ordenes1 && pct1 > 0) {
-                    const precioPromedio1 = (parseFloat(desde1) + parseFloat(hasta1)) / 2;
-                    const lotesAprox1 = (riesgo * (pct1/100)) / Math.abs(precioPromedio1 - parseFloat(sl));
-                    
-                    const shortcut = tipo === 'LONG' ? 'sb' : 'ss';
-                    const comando1 = `${shortcut} ${simbolo} ${lotesAprox1.toFixed(3)} ${desde1}-${hasta1} ${ordenes1}${sl ? ' SL:' + sl : ''}${tp ? ' TP:' + tp : ''}`;
-                    
-                    enviarComandoTelegram(comando1, 'SCALE #1');
-                    comandosEnviados++;
+            try {
+                // Limpiar entradas previas
+                for (let i = 1; i <= 3; i++) {
+                    document.getElementById(`entrada${i}_precio`).value = '';
+                    document.getElementById(`entrada${i}_pct`).value = '0';
                 }
+                document.getElementById('escalada_activa').checked = false;
+                document.getElementById('escalada2_activa').checked = false;
+                
+                // DETECTAR FORMATO Y EXTRAER DATOS - VERSIÓN ULTRA FLEXIBLE
+                
+                // 1. Extraer símbolo (máxima flexibilidad)
+                const simboloPatterns = [
+                    /🔹\s*(\w+)/i,
+                    /símbolo[:\s]*(\w+)/i,
+                    /symbol[:\s]*(\w+)/i,
+                    /par[:\s]*(\w+)/i,
+                    /^(\w+)\s*(?:long|short)/i,
+                    /^([a-z]{2,5})$/im,  // Solo símbolo en línea (btc, eth, etc)
+                    /(\w+USDT)/i
+                ];
+                
+                for (const pattern of simboloPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('simbolo').value = match[1].toLowerCase();
+                        break;
+                    }
+                }
+                
+                // 2. Extraer tipo (máxima flexibilidad)
+                const tipoPatterns = [
+                    /tipo[:\s]*(long|short)/i,
+                    /dirección[:\s]*(long|short)/i,
+                    /direction[:\s]*(long|short)/i,
+                    /^(long|short)$/im,  // Solo en una línea
+                    /(long|short)/i
+                ];
+                
+                for (const pattern of tipoPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('tipo').value = match[1].toUpperCase();
+                        break;
+                    }
+                }
+                
+                // 3. Extraer riesgo (máxima flexibilidad)
+                const riesgoPatterns = [
+                    /riesgo[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /risk[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /capital[:\s]*\$?(\d+(?:\.\d+)?)/i,
+                    /(\d+)\$?\s*riesgo/i,  // "100$ riesgo" o "100 riesgo"
+                    /\$(\d+(?:\.\d+)?)/
+                ];
+                
+                for (const pattern of riesgoPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('riesgo').value = match[1];
+                        break;
+                    }
+                }
+                
+                // 4. Extraer Stop Loss (máxima flexibilidad)
+                const slPatterns = [
+                    /sl[:\s]*(\d+(?:\.\d+)?)/i,
+                    /stop\s*loss[:\s]*(\d+(?:\.\d+)?)/i,
+                    /stop[:\s]*(\d+(?:\.\d+)?)/i,
+                    /stoploss[:\s]*(\d+(?:\.\d+)?)/i
+                ];
+                
+                for (const pattern of slPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('sl').value = match[1];
+                        break;
+                    }
+                }
+                
+                // 5. Extraer Take Profit (máxima flexibilidad)
+                const tpPatterns = [
+                    /tp[:\s]*(\d+(?:\.\d+)?)/i,
+                    /take\s*profit[:\s]*(\d+(?:\.\d+)?)/i,
+                    /target[:\s]*(\d+(?:\.\d+)?)/i,
+                    /objetivo[:\s]*(\d+(?:\.\d+)?)/i
+                ];
+                
+                for (const pattern of tpPatterns) {
+                    const match = input.match(pattern);
+                    if (match) {
+                        document.getElementById('tp').value = match[1];
+                        break;
+                    }
+                }
+                
+                // 6. Extraer entradas (máxima flexibilidad)
+                const entradaPatterns = [
+                    // Formato tradicional: "Entrada 1: 105,900 (25%)"
+                    /entrada\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/gi,
+                    // Tu formato: "entrada: 1 106090.9 30%"
+                    /entrada[:\s]*(\d)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi,
+                    // Formato: "Entry 1: 105900 25%"
+                    /entry\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi,
+                    // Formato: "- 105900 (25%)"
+                    /-\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/g,
+                    // Formato simple: "105900 25%"
+                    /(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/g
+                ];
+                
+                let entradaIndex = 1;
+                for (const pattern of entradaPatterns) {
+                    const matches = [...input.matchAll(pattern)];
+                    for (const match of matches) {
+                        if (entradaIndex <= 3) {
+                            let precio, pct;
+                            if (match.length === 4) { // Con número de entrada
+                                precio = match[2].replace(/,/g, '');
+                                pct = match[3];
+                            } else { // Sin número de entrada
+                                precio = match[1].replace(/,/g, '');
+                                pct = match[2];
+                            }
+                            
+                            document.getElementById(`entrada${entradaIndex}_precio`).value = precio;
+                           document.getElementById(`entrada${entradaIndex}_pct`).value = pct;
+                           entradaIndex++;
+                       }
+                   }
+                   if (entradaIndex > 1) break; // Si encontró entradas, no buscar más
+               }
+               
+               // 7. Extraer escaladas (máxima flexibilidad) - MEJORADO PARA 2 RANGOS
+              const escaladaPatterns = [
+                  // Formato tradicional: "Escalada: 104,800 a 104,400 con 8-10 órdenes (40%)"
+                  /(?:escalada|rango\s*\d*)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)(?:-\d+)?\s*órdenes\s*\((\d+)%\)/gi,
+                  // Tu formato: "escalada: 105670.8 a 104526.5 con 15 ordenes 30%"
+                  /(?:escalada|rango\s*\d*)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)\s*ordenes\s*(\d+)%/gi,
+                  // Formato: "Scale: 104800 to 104400 with 8 orders 40%"
+                  /(?:scale|rango\s*\d*)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:to|a)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes|ordenes)[:\s]*(\d+)%/gi
+              ];
+              
+              let escaladaIndex = 1;
+              for (const pattern of escaladaPatterns) {
+                  const matches = [...input.matchAll(pattern)];
+                  for (const match of matches) {
+                      if (escaladaIndex <= 2) {
+                          const fieldPrefix = escaladaIndex === 1 ? 'escalada' : 'escalada2';
+                          
+                          document.getElementById(`${fieldPrefix}_activa`).checked = true;
+                          document.getElementById(`${fieldPrefix}_desde`).value = match[1].replace(/,/g, '');
+                          document.getElementById(`${fieldPrefix}_hasta`).value = match[2].replace(/,/g, '');
+                          document.getElementById(`${fieldPrefix}_ordenes`).value = match[3];
+                          document.getElementById(`${fieldPrefix}_pct`).value = match[4];
+                          escaladaIndex++;
+                      }
+                  }
+              }
+              
+              showStatus('success', '✅ Señal cargada - Parser mejorado con 2 rangos');
+              calcular(); // Auto-calcular después de cargar
+              
+          } catch (error) {
+              showStatus('error', '❌ Error al parsear - Revisa el formato');
+              console.log('Parser error:', error);
+          }
+      }
+      
+      function copiarOutput() {
+          const output = document.getElementById('output').textContent;
+          navigator.clipboard.writeText(output).then(() => {
+              showStatus('success', '✅ Copiado al portapapeles');
+          });
+      }
+      
+      function enviarTelegram() {
+          const output = document.getElementById('output').textContent;
+          
+          // Pon aquí tu bot token y chat ID
+          const botToken = "7582987755:AAFBdNQFZ4McMsJwt60gvTs9CW2XkKZ3OMA";
+          const chatId = "7471012566";
+          
+          const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+          
+          fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  chat_id: chatId,
+                  text: output
+              })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.ok) {
+                  showStatus('success', '✅ Enviado a Telegram!');
+              } else {
+                  showStatus('error', '❌ Error al enviar');
+              }
+          })
+          .catch(error => {
+              showStatus('error', '❌ Error de conexión');
+          });
+      }
+
+      // 🆕 FUNCIONES DE ENVÍO RÁPIDO CON SHORTCUTS
+
+      function enviarScale() {
+    const simbolo = document.getElementById('simbolo').value || 'btc';
+    const tipo = document.getElementById('tipo').value;
+    const sl = document.getElementById('sl').value;
+    const tp = document.getElementById('tp').value;
+    
+    let comandosEnviados = 0;
+    
+    // 🔥 ENVIAR ESCALADA #1 SI ESTÁ ACTIVA
+    if (document.getElementById('escalada_activa').checked) {
+        const desde1 = document.getElementById('escalada_desde').value;
+        const hasta1 = document.getElementById('escalada_hasta').value;
+        const ordenes1 = document.getElementById('escalada_ordenes').value;
+        const pct1 = parseFloat(document.getElementById('escalada_pct').value) || 0;
+        const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
+        
+        if (desde1 && hasta1 && ordenes1 && pct1 > 0) {
+            // Calcular cantidad aproximada
+            const precioPromedio1 = (parseFloat(desde1) + parseFloat(hasta1)) / 2;
+            const lotesAprox1 = (riesgo * (pct1/100)) / Math.abs(precioPromedio1 - parseFloat(sl));
+            
+            // 🔥 USAR SHORTCUT 'sb' o 'ss'
+            const shortcut = tipo === 'LONG' ? 'sb' : 'ss';
+            const comando1 = `${shortcut} ${simbolo} ${lotesAprox1.toFixed(3)} ${desde1}-${hasta1} ${ordenes1}${sl ? ' SL:' + sl : ''}${tp ? ' TP:' + tp : ''}`;
+            
+            enviarComandoTelegram(comando1, 'SCALE #1');
+            comandosEnviados++;
+        }
+    }
+    
+    // 🔥 ENVIAR ESCALADA #2 SI ESTÁ ACTIVA
+    if (document.getElementById('escalada2_activa').checked) {
+        const desde2 = document.getElementById('escalada2_desde').value;
+        const hasta2 = document.getElementById('escalada2_hasta').value;
+        const ordenes2 = document.getElementById('escalada2_ordenes').value;
+        const pct2 = parseFloat(document.getElementById('escalada2_pct').value) || 0;
+        const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
+        
+        if (desde2 && hasta2 && ordenes2 && pct2 > 0) {
+            // Calcular cantidad aproximada
+            const precioPromedio2 = (parseFloat(desde2) + parseFloat(hasta2)) / 2;
+            const lotesAprox2 = (riesgo * (pct2/100)) / Math.abs(precioPromedio2 - parseFloat(sl));
+            
+            // 🔥 USAR SHORTCUT 'sb' o 'ss'
+            const shortcut = tipo === 'LONG' ? 'sb' : 'ss';
+            const comando2 = `${shortcut} ${simbolo} ${lotesAprox2.toFixed(3)} ${desde2}-${hasta2} ${ordenes2}${sl ? ' SL:' + sl : ''}${tp ? ' TP:' + tp : ''}`;
+            
+            // 🆕 ESPERAR UN POCO ENTRE ENVÍOS PARA NO SATURAR
+            setTimeout(() => {
+                enviarComandoTelegram(comando2, 'SCALE #2');
+            }, 1000);
+            comandosEnviados++;
+        }
+    }
+    
+    // Mostrar mensaje de error si no hay escaladas activas
+    if (comandosEnviados === 0) {
+        showStatus('error', '❌ Activa al menos una escalada para enviar SCALE');
+    } else {
+        showStatus('success', `✅ Enviando ${comandosEnviados} comando(s) SCALE`);
+    }
+}
+
+function enviarMarket() {
+    const simbolo = document.getElementById('simbolo').value || 'btc';
+    const tipo = document.getElementById('tipo').value;
+    const sl = document.getElementById('sl').value; // 🔥 INCLUIR SL
+    const tp = document.getElementById('tp').value; // 🔥 INCLUIR TP OPCIONAL
+    
+    // Buscar primera entrada con cantidad
+    let cantidadEncontrada = false;
+    for (let i = 1; i <= 3; i++) {
+        const precio = document.getElementById(`entrada${i}_precio`).value;
+        const pct = parseFloat(document.getElementById(`entrada${i}_pct`).value) || 0;
+        
+        if (precio && pct > 0) {
+            const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
+            const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
+            
+            // 🔥 USAR SHORTCUT 'mb' o 'ms' CON SL/TP
+            const shortcut = tipo === 'LONG' ? 'mb' : 'ms';
+            let comando = `${shortcut} ${simbolo} ${lotes.toFixed(3)}`;
+            
+            // 🆕 AÑADIR SL Y TP AL COMANDO MARKET
+            if (sl) {
+                comando += ` SL:${sl}`;
+            }
+            if (tp) {
+                comando += ` TP:${tp}`;
             }
             
-            // 🔥 ENVIAR ESCALADA #2 SI ESTÁ ACTIVA
-            if (document.getElementById('escalada2_activa').checked) {
-                const desde2 = document.getElementById('escalada2_desde').value;
-                const hasta2 = document.getElementById('escalada2_hasta').value;
-                const ordenes2 = document.getElementById('escalada2_ordenes').value;
-                const pct2 = parseFloat(document.getElementById('escalada2_pct').value) || 0;
-                const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
-                
-                if (desde2 && hasta2 && ordenes2 && pct2 > 0) {
-                    const precioPromedio2 = (parseFloat(desde2) + parseFloat(hasta2)) / 2;
-                   const lotesAprox2 = (riesgo * (pct2/100)) / Math.abs(precioPromedio2 - parseFloat(sl));
-                   
-                   const shortcut = tipo === 'LONG' ? 'sb' : 'ss';
-                   const comando2 = `${shortcut} ${simbolo} ${lotesAprox2.toFixed(3)} ${desde2}-${hasta2} ${ordenes2}${sl ? ' SL:' + sl : ''}${tp ? ' TP:' + tp : ''}`;
-                   
-                   // 🆕 ESPERAR UN POCO ENTRE ENVÍOS PARA NO SATURAR
-                   setTimeout(() => {
-                       enviarComandoTelegram(comando2, 'SCALE #2');
-                   }, 1000);
-                   comandosEnviados++;
-               }
-           }
-           
-           // Mostrar mensaje de error si no hay escaladas activas
-           if (comandosEnviados === 0) {
-               showStatus('error', '❌ Activa al menos una escalada para enviar SCALE');
-           } else {
-               showStatus('success', `✅ Enviando ${comandosEnviados} comando(s) SCALE`);
-           }
-       }
+            enviarComandoTelegram(comando, 'MARKET CON SL/TP');
+            cantidadEncontrada = true;
+            break;
+        }
+    }
+    
+    if (!cantidadEncontrada) {
+        // Cantidad por defecto si no hay entradas
+        const shortcut = tipo === 'LONG' ? 'mb' : 'ms';
+        let comando = `${shortcut} ${simbolo} 0.005`;
+        
+        // 🆕 AÑADIR SL Y TP INCLUSO EN CANTIDAD POR DEFECTO
+        if (sl) {
+            comando += ` SL:${sl}`;
+        }
+        if (tp) {
+            comando += ` TP:${tp}`;
+        }
+        
+        enviarComandoTelegram(comando, 'MARKET CON SL/TP');
+    }
+}
 
-       function enviarMarket() {
-           const simbolo = document.getElementById('simbolo').value || 'btc';
-           const tipo = document.getElementById('tipo').value;
-           const sl = document.getElementById('sl').value; // 🔥 INCLUIR SL
-           const tp = document.getElementById('tp').value; // 🔥 INCLUIR TP OPCIONAL
-           
-           // Buscar primera entrada con cantidad
-           let cantidadEncontrada = false;
-           for (let i = 1; i <= 3; i++) {
-               const precio = document.getElementById('entrada' + i + '_precio').value;
-               const pct = parseFloat(document.getElementById('entrada' + i + '_pct').value) || 0;
-               
-               if (precio && pct > 0) {
-                   const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
-                   const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
-                   
-                   // 🔥 USAR SHORTCUT 'mb' o 'ms' CON SL/TP
-                   const shortcut = tipo === 'LONG' ? 'mb' : 'ms';
-                   let comando = `${shortcut} ${simbolo} ${lotes.toFixed(3)}`;
-                   
-                   // 🆕 AÑADIR SL Y TP AL COMANDO MARKET
-                   if (sl) {
-                       comando += ` SL:${sl}`;
-                   }
-                   if (tp) {
-                       comando += ` TP:${tp}`;
-                   }
-                   
-                   enviarComandoTelegram(comando, 'MARKET CON SL/TP');
-                   cantidadEncontrada = true;
-                   break;
-               }
-           }
-           
-           if (!cantidadEncontrada) {
-               // Cantidad por defecto si no hay entradas
-               const shortcut = tipo === 'LONG' ? 'mb' : 'ms';
-               let comando = `${shortcut} ${simbolo} 0.005`;
-               
-               // 🆕 AÑADIR SL Y TP INCLUSO EN CANTIDAD POR DEFECTO
-               if (sl) {
-                   comando += ` SL:${sl}`;
-               }
-               if (tp) {
-                   comando += ` TP:${tp}`;
-               }
-               
-               enviarComandoTelegram(comando, 'MARKET CON SL/TP');
-           }
-       }
+      function enviarEntradas() {
+          const simbolo = document.getElementById('simbolo').value || 'btc';
+          const tipo = document.getElementById('tipo').value;
+          const sl = document.getElementById('sl').value;
+          const tp = document.getElementById('tp').value;
+          
+          // Buscar primera entrada válida
+          for (let i = 1; i <= 3; i++) {
+              const precio = document.getElementById(`entrada${i}_precio`).value;
+              const pct = parseFloat(document.getElementById(`entrada${i}_pct`).value) || 0;
+              
+              if (precio && pct > 0) {
+                  const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
+                  const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
+                  
+                  // 🔥 USAR SHORTCUT 'lb' o 'ls' (Limit Buy/Sell)
+                  const shortcut = tipo === 'LONG' ? 'lb' : 'ls';
+                  const comando = `${shortcut} ${simbolo} ${lotes.toFixed(3)} ${precio}${sl ? ' SL:' + sl : ''}${tp ? ' TP:' + tp : ''}`;
+                  
+                  enviarComandoTelegram(comando, 'ENTRADA LIMIT');
+                  break;
+              }
+          }
+      }
 
-       function enviarEntradas() {
-           const simbolo = document.getElementById('simbolo').value || 'btc';
-           const tipo = document.getElementById('tipo').value;
-           const sl = document.getElementById('sl').value;
-           const tp = document.getElementById('tp').value;
-           
-           // Buscar primera entrada válida
-           for (let i = 1; i <= 3; i++) {
-               const precio = document.getElementById('entrada' + i + '_precio').value;
-               const pct = parseFloat(document.getElementById('entrada' + i + '_pct').value) || 0;
-               
-               if (precio && pct > 0) {
-                   const riesgo = parseFloat(document.getElementById('riesgo').value) || 100;
-                   const lotes = (riesgo * (pct/100)) / Math.abs(precio - sl);
-                   
-                   // 🔥 USAR SHORTCUT 'lb' o 'ls' (Limit Buy/Sell)
-                   const shortcut = tipo === 'LONG' ? 'lb' : 'ls';
-                   const comando = `${shortcut} ${simbolo} ${lotes.toFixed(3)} ${precio}${sl ? ' SL:' + sl : ''}${tp ? ' TP:' + tp : ''}`;
-                   
-                   enviarComandoTelegram(comando, 'ENTRADA LIMIT');
-                   break;
-               }
-           }
-       }
-
-       function enviarShortcuts() {
-           const simbolo = document.getElementById('simbolo').value || 'btc';
-           
-           const shortcuts = `⚡ SHORTCUTS DISPONIBLES:
+      function enviarShortcuts() {
+          const simbolo = document.getElementById('simbolo').value || 'btc';
+          
+          const shortcuts = `⚡ SHORTCUTS DISPONIBLES:
 
 🔥 MARKET ORDERS:
 - mb ${simbolo} 0.005  (Market Buy)
@@ -856,299 +1093,96 @@
 
 💡 Solo envía el comando que necesites!`;
 
-           enviarComandoTelegram(shortcuts, 'SHORTCUTS');
-       }
+          enviarComandoTelegram(shortcuts, 'SHORTCUTS');
+      }
 
-       function enviarComandoTelegram(comando, tipo) {
-           const botToken = "7582987755:AAFBdNQFZ4McMsJwt60gvTs9CW2XkKZ3OMA";
-           const chatId = "7471012566";
-           
-           const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-           
-           fetch(url, {
-               method: 'POST',
-               headers: {
-                   'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                   chat_id: chatId,
-                   text: comando
-               })
-           })
-           .then(response => response.json())
-           .then(data => {
-               if (data.ok) {
-                   showStatus('success', `✅ ${tipo} enviado: ${comando.substring(0, 30)}...`);
-               } else {
-                   showStatus('error', `❌ Error al enviar ${tipo}`);
-               }
-           })
-           .catch(error => {
-               showStatus('error', `❌ Error de conexión al enviar ${tipo}`);
-           });
-       }
-       
-       function parsearSenal() {
-           const input = document.getElementById('parser_input').value;
-           if (!input) {
-               showStatus('error', '❌ No hay datos para parsear');
-               return;
-           }
-           
-           try {
-               // Limpiar entradas previas
-               for (let i = 1; i <= 3; i++) {
-                   document.getElementById('entrada' + i + '_precio').value = '';
-                   document.getElementById('entrada' + i + '_pct').value = '0';
-               }
-               document.getElementById('escalada_activa').checked = false;
-               document.getElementById('escalada2_activa').checked = false;
-               
-               // 1. Extraer símbolo (máxima flexibilidad)
-               const simboloPatterns = [
-                   /🔹\s*(\w+)/i,
-                   /símbolo[:\s]*(\w+)/i,
-                   /symbol[:\s]*(\w+)/i,
-                   /par[:\s]*(\w+)/i,
-                   /^(\w+)\s*(?:long|short)/i,
-                   /^([a-z]{2,5})$/im,  // Solo símbolo en línea (btc, eth, etc)
-                   /(\w+USDT)/i
-               ];
-               
-               for (const pattern of simboloPatterns) {
-                   const match = input.match(pattern);
-                   if (match) {
-                       document.getElementById('simbolo').value = match[1].toLowerCase();
-                       break;
-                   }
-               }
-               
-               // 2. Extraer tipo
-               const tipoPatterns = [
-                   /tipo[:\s]*(long|short)/i,
-                   /dirección[:\s]*(long|short)/i,
-                   /direction[:\s]*(long|short)/i,
-                   /^(long|short)$/im,
-                   /(long|short)/i
-               ];
-               
-               for (const pattern of tipoPatterns) {
-                   const match = input.match(pattern);
-                   if (match) {
-                       document.getElementById('tipo').value = match[1].toUpperCase();
-                       break;
-                   }
-               }
-               
-               // 3. Extraer riesgo
-               const riesgoPatterns = [
-                   /riesgo[:\s]*\$?(\d+(?:\.\d+)?)/i,
-                   /risk[:\s]*\$?(\d+(?:\.\d+)?)/i,
-                   /capital[:\s]*\$?(\d+(?:\.\d+)?)/i,
-                   /(\d+)\$?\s*riesgo/i,
-                   /\$(\d+(?:\.\d+)?)/
-               ];
-               
-               for (const pattern of riesgoPatterns) {
-                   const match = input.match(pattern);
-                   if (match) {
-                       document.getElementById('riesgo').value = match[1];
-                       break;
-                   }
-               }
-               
-               // 4. Extraer Stop Loss
-               const slPatterns = [
-                   /sl[:\s]*(\d+(?:\.\d+)?)/i,
-                   /stop\s*loss[:\s]*(\d+(?:\.\d+)?)/i,
-                   /stop[:\s]*(\d+(?:\.\d+)?)/i,
-                   /stoploss[:\s]*(\d+(?:\.\d+)?)/i
-               ];
-               
-               for (const pattern of slPatterns) {
-                   const match = input.match(pattern);
-                   if (match) {
-                       document.getElementById('sl').value = match[1];
-                       break;
-                   }
-               }
-               
-               // 5. Extraer Take Profit
-               const tpPatterns = [
-                   /tp[:\s]*(\d+(?:\.\d+)?)/i,
-                   /take\s*profit[:\s]*(\d+(?:\.\d+)?)/i,
-                   /target[:\s]*(\d+(?:\.\d+)?)/i,
-                   /objetivo[:\s]*(\d+(?:\.\d+)?)/i
-               ];
-               
-               for (const pattern of tpPatterns) {
-                   const match = input.match(pattern);
-                   if (match) {
-                       document.getElementById('tp').value = match[1];
-                       break;
-                   }
-               }
-               
-               // 6. Extraer entradas
-               const entradaPatterns = [
-                   // Formato tradicional: "Entrada 1: 105,900 (25%)"
-                   /entrada\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/gi,
-                   // Tu formato: "entrada: 1 106090.9 30%"
-                   /entrada[:\s]*(\d)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi,
-                   // Formato: "Entry 1: 105900 25%"
-                   /entry\s*(\d)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/gi,
-                   // Formato: "- 105900 (25%)"
-                   /-\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*\((\d+)%\)/g,
-                   // Formato simple: "105900 25%"
-                   /(\d+(?:,\d{3})*(?:\.\d+)?)\s*(\d+)%/g
-               ];
-               
-               let entradaIndex = 1;
-               for (const pattern of entradaPatterns) {
-                   const matches = [...input.matchAll(pattern)];
-                   for (const match of matches) {
-                       if (entradaIndex <= 3) {
-                           let precio, pct;
-                           if (match.length === 4) { // Con número de entrada
-                               precio = match[2].replace(/,/g, '');
-                               pct = match[3];
-                           } else { // Sin número de entrada
-                               precio = match[1].replace(/,/g, '');
-                               pct = match[2];
-                           }
-                           
-                           document.getElementById('entrada' + entradaIndex + '_precio').value = precio;
-                           document.getElementById('entrada' + entradaIndex + '_pct').value = pct;
-                           entradaIndex++;
-                       }
-                   }
-                   if (entradaIndex > 1) break; // Si encontró entradas, no buscar más
-               }
-               
-               // 7. Extraer escaladas (máxima flexibilidad) - MEJORADO PARA 2 RANGOS
-               const escaladaPatterns = [
-                   // Formato tradicional: "Escalada: 104,800 a 104,400 con 8-10 órdenes (40%)"
-                   /(?:escalada|rango\s*\d*)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)(?:-\d+)?\s*órdenes\s*\((\d+)%\)/gi,
-                   // Tu formato: "escalada: 105670.8 a 104526.5 con 15 ordenes 30%"
-                   /(?:escalada|rango\s*\d*)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*a\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*con\s*(\d+)\s*ordenes\s*(\d+)%/gi,
-                   // Formato: "Scale: 104800 to 104400 with 8 orders 40%"
-                   /(?:scale|rango\s*\d*)[:\s]*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:to|a)\s*(\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:with|con)\s*(\d+)\s*(?:orders|órdenes|ordenes)[:\s]*(\d+)%/gi
-               ];
-               
-               let escaladaIndex = 1;
-               for (const pattern of escaladaPatterns) {
-                   const matches = [...input.matchAll(pattern)];
-                   for (const match of matches) {
-                       if (escaladaIndex <= 2) {
-                           const fieldPrefix = escaladaIndex === 1 ? 'escalada' : 'escalada2';
-                           
-                           document.getElementById(`${fieldPrefix}_activa`).checked = true;
-                           document.getElementById(`${fieldPrefix}_desde`).value = match[1].replace(/,/g, '');
-                           document.getElementById(`${fieldPrefix}_hasta`).value = match[2].replace(/,/g, '');
-                           document.getElementById(`${fieldPrefix}_ordenes`).value = match[3];
-                           document.getElementById(`${fieldPrefix}_pct`).value = match[4];
-                           escaladaIndex++;
-                       }
-                   }
-               }
-               
-               showStatus('success', '✅ Señal cargada - Parser mejorado con 2 rangos');
-               calcularYMostrar();
-               
-           } catch (error) {
-               showStatus('error', '❌ Error al parsear - Revisa el formato');
-               console.log('Parser error:', error);
-           }
-       }
-       
-       function copiarOutput() {
-           const output = document.getElementById('output').textContent;
-           navigator.clipboard.writeText(output).then(() => {
-               showStatus('success', '✅ Copiado');
-           }).catch(() => {
-               showStatus('error', '❌ Error al copiar');
-           });
-       }
-       
-       function enviarTelegram() {
-           const output = document.getElementById('output').textContent;
-           
-           const botToken = "7582987755:AAFBdNQFZ4McMsJwt60gvTs9CW2XkKZ3OMA";
-           const chatId = "7471012566";
-           
-           const url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
-           
-           fetch(url, {
-               method: 'POST',
-               headers: {
-                   'Content-Type': 'application/json',
-               },
-               body: JSON.stringify({
-                   chat_id: chatId,
-                   text: output
-               })
-           })
-           .then(response => response.json())
-           .then(data => {
-               if (data.ok) {
-                   showStatus('success', '✅ Enviado a Telegram!');
-               } else {
-                   showStatus('error', '❌ Error al enviar');
-               }
-           })
-           .catch(error => {
-               showStatus('error', '❌ Error de conexión');
-           });
-       }
-       
-       function limpiarForm() {
-           // MANTENER SOLO EL RIESGO - limpiar todo lo demás
-           document.getElementById('simbolo').value = '';
-           document.getElementById('tipo').selectedIndex = 0;
-           document.getElementById('sl').value = '';
-           document.getElementById('tp').value = '';
-           
-           // Limpiar TODAS las entradas
-           for (let i = 1; i <= 3; i++) {
-               document.getElementById('entrada' + i + '_precio').value = '';
-               document.getElementById('entrada' + i + '_pct').value = '';
-           }
-           
-           // Limpiar escalada 1
-           document.getElementById('escalada_activa').checked = false;
-           document.getElementById('escalada_desde').value = '';
-           document.getElementById('escalada_hasta').value = '';
-           document.getElementById('escalada_ordenes').value = '';
-           document.getElementById('escalada_pct').value = '';
-           
-           // 🆕 Limpiar escalada 2
-           document.getElementById('escalada2_activa').checked = false;
-           document.getElementById('escalada2_desde').value = '';
-           document.getElementById('escalada2_hasta').value = '';
-           document.getElementById('escalada2_ordenes').value = '';
-           document.getElementById('escalada2_pct').value = '';
-           
-           // Limpiar parser y output
-           document.getElementById('parser_input').value = '';
-           document.getElementById('output').textContent = 'Click el botón flotante para calcular...';
-           
-           // Limpiar status
-           const statusEl = document.getElementById('status');
-           statusEl.textContent = '';
-           statusEl.className = '';
-           
-           showStatus('success', '✅ Limpiado - Riesgo mantenido');
-       }
-       
-       function showStatus(type, message) {
-           const status = document.getElementById('status');
-           status.className = 'status ' + type;
-           status.textContent = message;
-           setTimeout(() => {
-               status.textContent = '';
-               status.className = '';
-           }, 3000);
-       }
-   </script>
+      function enviarComandoTelegram(comando, tipo) {
+          const botToken = "7582987755:AAFBdNQFZ4McMsJwt60gvTs9CW2XkKZ3OMA";
+          const chatId = "7471012566";
+          
+          const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+          
+          fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  chat_id: chatId,
+                  text: comando
+              })
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.ok) {
+                  showStatus('success', `✅ ${tipo} enviado: ${comando.substring(0, 30)}...`);
+              } else {
+                  showStatus('error', `❌ Error al enviar ${tipo}`);
+              }
+          })
+          .catch(error => {
+              showStatus('error', `❌ Error de conexión al enviar ${tipo}`);
+          });
+      }
+      
+      function limpiarForm() {
+          // MANTENER SOLO EL RIESGO - limpiar todo lo demás
+          
+          // Configuración básica - limpiar todo excepto riesgo
+          document.getElementById('simbolo').value = '';
+          document.getElementById('tipo').selectedIndex = 0; // LONG
+          document.getElementById('sl').value = '';
+          document.getElementById('tp').value = '';
+          
+          // Limpiar TODAS las entradas completamente
+          for (let i = 1; i <= 3; i++) {
+              document.getElementById(`entrada${i}_precio`).value = '';
+              document.getElementById(`entrada${i}_pct`).value = '';
+          }
+          
+          // Limpiar escalada 1 completamente
+          document.getElementById('escalada_activa').checked = false;
+          document.getElementById('escalada_desde').value = '';
+          document.getElementById('escalada_hasta').value = '';
+          document.getElementById('escalada_ordenes').value = '';
+          document.getElementById('escalada_pct').value = '';
+          
+          // Limpiar escalada 2 completamente
+          document.getElementById('escalada2_activa').checked = false;
+          document.getElementById('escalada2_desde').value = '';
+          document.getElementById('escalada2_hasta').value = '';
+          document.getElementById('escalada2_ordenes').value = '';
+          document.getElementById('escalada2_pct').value = '';
+          
+          // Limpiar parser y output
+          document.getElementById('parser_input').value = '';
+          document.getElementById('output').textContent = 'Click "Calcular" para generar la señal...';
+          
+          // Limpiar status
+          const statusEl = document.getElementById('status');
+          statusEl.textContent = '';
+          statusEl.className = '';
+          
+          showStatus('success', '✅ Formulario limpiado - Riesgo mantenido');
+      }
+      
+      function showStatus(type, message) {
+          const status = document.getElementById('status');
+          status.className = `status ${type}`;
+          status.textContent = message;
+          setTimeout(() => {
+              status.textContent = '';
+              status.className = '';
+          }, 3000);
+      }
+      
+      // Auto-calcular cuando cambien valores importantes
+      document.addEventListener('DOMContentLoaded', function() {
+          const inputs = document.querySelectorAll('input, select');
+          inputs.forEach(input => {
+              input.addEventListener('change', calcular);
+          });
+      });
+  </script>
 </body>
 </html>
