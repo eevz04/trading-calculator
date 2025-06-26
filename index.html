@@ -952,7 +952,7 @@ TP: ${tp} (Ganancia: ${gananciaTP.toFixed(2)})
 Lotes Totales: ${lotesTotales.toFixed(6)}
 R/B: ${rr.toFixed(3)}
 
-${Math.abs(perdidaSL - riesgo) < 1 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)'}`;
+${pctTotal === 100 ? '✅ RIESGO EXACTO' : '⚠️ PORCENTAJES: ' + pctTotal + '% (debe ser 100%)'}`;
             
             document.getElementById('output').textContent = output;
             showStatusMini(pctTotal === 100 ? 'success' : 'error', 
